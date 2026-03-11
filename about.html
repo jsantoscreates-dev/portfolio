@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Jorge Santos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    (function() {
+      var fontsLoaded = false;
+      function showContent() {
+        if (!fontsLoaded) {
+          fontsLoaded = true;
+          document.documentElement.classList.add('fonts-loaded');
+        }
+      }
+      if (document.fonts && document.fonts.load) {
+        Promise.all([
+          document.fonts.load('400 1em "Work Sans"'),
+          document.fonts.load('400 1em "Lora"')
+        ]).then(showContent).catch(showContent);
+      } else {
+        showContent();
+      }
+      setTimeout(showContent, 1000);
+    })();
+  </script>
+</head>
+<body>
+  <!-- Fixed Navigation Bar (appears on scroll) -->
+  <nav class="sticky-nav">
+    <a href="index.html" class="sticky-logo">JSANTOSCREATES</a>
+    <div class="sticky-links">
+      <a href="https://drive.google.com/file/d/1lcuM44qyUktltgVUWDDUrJZbFb6ILd3d/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="nav-link">RESUME</a>
+      <a href="about.html" class="nav-link">ABOUT</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <header class="header-bar">
+      <a href="index.html" class="header-bar-logo">JSANTOSCREATES</a>
+      <nav class="header-bar-nav">
+        <a href="https://drive.google.com/file/d/1lcuM44qyUktltgVUWDDUrJZbFb6ILd3d/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="nav-link">RESUME</a>
+        <a href="about.html" class="nav-link">ABOUT</a>
+      </nav>
+    </header>
+
+    <section class="about">
+      <div class="about-image-wrapper fade-media">
+        <img src="images/global/About.png" alt="Jorge Santos" class="about-image">
+      </div>
+      <div class="about-content">
+        <h1 class="about-title reveal-text">ABOUT</h1>
+        <div class="about-info reveal-text">
+          <div class="about-text">
+            <p>I'm a portuguese designer based in Lisbon, working across product design, interfaces, and graphic work. I get inspired by everything, cinema, music, history, economics, psychology, because the best design references usually have nothing to do with design.</p>
+            <p>I started in advertising and moved through graphic design, web, branding, and more recently into product and UX/UI. Not because I couldn't pick one, but because the interesting ideas live in the overlap. I've designed logistics platforms at CEVA, AI tools at Clay/KangarooTime, and campaigns for Unilever, Moche, and Fidelidade. Between all of that, freelance work in graphic design, branding, and web.</p>
+            <p>I also need to make things for myself. Small tools, posters, experiments with no brief and no deadline.</p>
+            <p>Open to product design and UX/UI roles, remote or hybrid. Also happy to take on visual design projects or build things with AI.</p>
+          </div>
+          <a href="mailto:hello@jorgesantos.com" class="about-link">GET IN TOUCH →</a>
+        </div>
+      </div>
+    </section>
+
+    <div style="height: 224px;"></div>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

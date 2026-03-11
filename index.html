@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jorge Santos — Designer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    // Check BEFORE page renders if we came from same header layout
+    if (sessionStorage.getItem('fromStaticHeader')) {
+      document.documentElement.classList.add('no-header-animation');
+    }
+
+    // Wait for specific fonts to load before showing content (prevents FOUT)
+    (function() {
+      var fontsLoaded = false;
+
+      function showContent() {
+        if (!fontsLoaded) {
+          fontsLoaded = true;
+          document.documentElement.classList.add('fonts-loaded');
+        }
+      }
+
+      if (document.fonts && document.fonts.load) {
+        Promise.all([
+          document.fonts.load('400 1em "Work Sans"'),
+          document.fonts.load('400 1em "Lora"')
+        ]).then(showContent).catch(showContent);
+      } else {
+        showContent();
+      }
+
+      setTimeout(showContent, 1000);
+    })();
+  </script>
+</head>
+<body>
+  <!-- Fixed Navigation Bar (appears on scroll) -->
+  <nav class="sticky-nav">
+    <a href="index.html" class="sticky-logo">JORGE SANTOS</a>
+    <div class="sticky-links">
+      <a href="https://drive.google.com/file/d/1lcuM44qyUktltgVUWDDUrJZbFb6ILd3d/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="nav-link">RESUME</a>
+      <a href="about.html" class="nav-link">ABOUT</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <header class="header">
+      <div class="hero-text reveal-text">
+        <h1>
+          <span class="name">JORGE SANTOS</span>
+          <span class="description">is a multidisciplinary portuguese designer driven by ideas, combining creativity, insight and solid execution.</span>
+        </h1>
+      </div>
+      <nav class="navigation reveal-text">
+        <a href="https://drive.google.com/file/d/1lcuM44qyUktltgVUWDDUrJZbFb6ILd3d/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="nav-link">RESUME</a>
+        <a href="about.html" class="nav-link">ABOUT</a>
+      </nav>
+    </header>
+
+    <section class="projects">
+      <article class="project-card">
+        <div class="project-card-media fade-media">
+          <video class="project-card-video" muted loop playsinline preload="metadata" poster="">
+            <source src="videos/release_final.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="project-card-content">
+          <h2 class="project-card-title reveal-text">RELEASE</h2>
+          <div class="project-card-info reveal-text">
+            <div class="project-card-text">
+              <p>What if you could destroy the thoughts that weigh you down?</p>
+              <p>Release is a therapeutic web experience where you write what's heavy, watch it disintegrate, and feel a bit of lightness.</p>
+              <p>Because sometimes, to move forward, you need to see it go.</p>
+            </div>
+            <a href="https://mouse-relink-18762291.figma.site/" target="_blank" rel="noopener noreferrer" class="project-card-link">VISIT RELEASE →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project-card">
+        <div class="project-card-media fade-media">
+          <video class="project-card-video" muted loop playsinline preload="metadata" poster="">
+            <source src="videos/Poster_emoji_final.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="project-card-content">
+          <h2 class="project-card-title reveal-text">POSTER EMOJI APP</h2>
+          <div class="project-card-info reveal-text">
+            <div class="project-card-text">
+              <p>If emojis were pixels, what would you draw?</p>
+              <p>A simple tool where you pick your emojis, adjust size and density, and create unexpected posters.</p>
+            </div>
+            <a href="https://posteremojiapp.vercel.app/" target="_blank" rel="noopener noreferrer" class="project-card-link">VISIT POSTER EMOJI APP →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project-card">
+        <div class="project-card-media fade-media">
+          <video class="project-card-video" muted loop playsinline preload="metadata" poster="">
+            <source src="videos/printed_years_final.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="project-card-content">
+          <h2 class="project-card-title reveal-text">PRINTED YEARS</h2>
+          <div class="project-card-info reveal-text">
+            <div class="project-card-text">
+              <p>If posters could live outside the feed, where would you put them?</p>
+              <p>Since 2019, I've been using an Instagram page to experiment, make mistakes, and post consistently. What started as visual exercises ended up on the walls of strangers.</p>
+              <p>This gallery is my way of giving these posters a quieter space to live, outside the noise of the feed.</p>
+            </div>
+            <a href="https://printed-years.vercel.app/" target="_blank" rel="noopener noreferrer" class="project-card-link">VISIT PRINTED YEARS →</a>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <div style="height: 84px;"></div>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>
