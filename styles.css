@@ -338,8 +338,13 @@ a {
   }
 
   .name {
-    font-size: clamp(18px, 4.5vw, 24px);
+    font-size: clamp(18px, 2.22vw, 32px);
     white-space: nowrap;
+    line-height: 1.19;
+    letter-spacing: -0.032px;
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
   }
 
   .navigation {
