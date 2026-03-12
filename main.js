@@ -82,8 +82,10 @@
   var allRevealEls = document.querySelectorAll('.reveal-text, .fade-media');
   var revealQueue = [];
   var isRevealing = false;
+  var isMobile = window.innerWidth <= 600;
   var REVEAL_DURATION = 1.6; // seconds
-  var STAGGER = 400; // ms between each element
+  var STAGGER = isMobile ? 250 : 400; // ms between each element
+  var SCROLL_THRESHOLD = isMobile ? 0.70 : 0.85;
 
   allRevealEls.forEach(function(el) {
     revealQueue.push({
@@ -144,7 +146,7 @@
       if (item.triggered) continue;
 
       var rect = item.el.getBoundingClientRect();
-      if (rect.top > window.innerHeight * 0.85) break;
+      if (rect.top > window.innerHeight * SCROLL_THRESHOLD) break;
 
       revealItem(item);
       isRevealing = true;
