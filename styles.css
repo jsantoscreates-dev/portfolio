@@ -325,6 +325,8 @@ a {
   .header {
     flex-direction: row;
     align-items: flex-start;
+    min-height: 0;
+    margin-bottom: 40px;
   }
 
   .navigation {
