@@ -335,6 +335,14 @@ a {
     align-items: flex-end;
     padding-top: 0;
   }
+
+  .name {
+    font-size: clamp(24px, 7vw, 32px);
+  }
+
+  .description {
+    font-size: clamp(21px, 5.8vw, 28px);
+  }
 }
 
 
