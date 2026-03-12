@@ -143,6 +143,9 @@ a {
   line-height: 1.19;
   position: relative;
   transition: opacity 0.3s ease;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
 }
 
 /* ==========================================================================
@@ -178,6 +181,9 @@ a {
   font-weight: 400;
   letter-spacing: -0.032px;
   line-height: 1.19;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
 }
 
 .sticky-links {
@@ -271,6 +277,9 @@ a {
   text-transform: uppercase;
   text-decoration: underline;
   transition: opacity 0.3s ease;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
 }
 
 .project-card-link:hover {
@@ -343,6 +352,9 @@ a {
   font-weight: 400;
   letter-spacing: -0.032px;
   line-height: 1.19;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
 }
 
 .header-bar-nav {
@@ -431,6 +443,9 @@ a {
   text-transform: uppercase;
   text-decoration: underline;
   transition: opacity 0.3s ease;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
 }
 
 .about-link:hover {
