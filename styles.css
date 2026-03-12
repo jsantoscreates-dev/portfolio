@@ -360,9 +360,6 @@ a {
     padding-top: 0;
   }
 
-  .project-card:first-child .project-card-media {
-    aspect-ratio: 1240 / 500;
-  }
 }
 
 
