@@ -100,15 +100,21 @@
   var scrollEls = [];
 
   var firstMediaFound = false;
+  var firstProjectDone = false;
 
   revealQueue.forEach(function(item) {
     var isHeader = item.el.closest('.header') || item.el.closest('.header-bar');
     var isFirstMedia = !firstMediaFound && item.el.classList.contains('fade-media');
+    var firstProjectCard = document.querySelector('.project-card');
+    var isFirstProjectContent = isMobile && !firstProjectDone && firstProjectCard && firstProjectCard.contains(item.el) && !item.el.classList.contains('fade-media');
 
-    if (isHeader || isFirstMedia) {
+    if (isHeader || isFirstMedia || isFirstProjectContent) {
       if (isFirstMedia) firstMediaFound = true;
       headerEls.push(item);
     } else {
+      if (firstMediaFound && firstProjectCard && firstProjectCard.contains(item.el)) {
+        firstProjectDone = true;
+      }
       scrollEls.push(item);
     }
   });
