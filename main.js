@@ -107,8 +107,9 @@
     var isFirstMedia = !firstMediaFound && item.el.classList.contains('fade-media');
     var firstProjectCard = document.querySelector('.project-card');
     var isFirstProjectContent = isMobile && !firstProjectDone && firstProjectCard && firstProjectCard.contains(item.el) && !item.el.classList.contains('fade-media');
+    var isAboutContent = isMobile && item.el.closest('.about');
 
-    if (isHeader || isFirstMedia || isFirstProjectContent) {
+    if (isHeader || isFirstMedia || isFirstProjectContent || isAboutContent) {
       if (isFirstMedia) firstMediaFound = true;
       headerEls.push(item);
     } else {
