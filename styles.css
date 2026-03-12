@@ -281,6 +281,19 @@ a {
   min-height: 40px;
   display: inline-flex;
   align-items: center;
+  gap: 6px;
+}
+
+.project-card-link::after {
+  content: '';
+  display: inline-block;
+  width: 0.6em;
+  height: 0.6em;
+  border-top: 1.5px solid currentColor;
+  border-right: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  text-decoration: none;
+  flex-shrink: 0;
 }
 
 .project-card-link:hover {
@@ -474,6 +487,19 @@ a {
   min-height: 40px;
   display: inline-flex;
   align-items: center;
+  gap: 6px;
+}
+
+.about-link::after {
+  content: '';
+  display: inline-block;
+  width: 0.6em;
+  height: 0.6em;
+  border-top: 1.5px solid currentColor;
+  border-right: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  text-decoration: none;
+  flex-shrink: 0;
 }
 
 .about-link:hover {
