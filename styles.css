@@ -342,6 +342,7 @@ a {
 
   .description {
     font-size: clamp(18px, 4.8vw, 24px);
+    line-height: 1.08;
   }
 
   .project-card:first-child .project-card-media {
