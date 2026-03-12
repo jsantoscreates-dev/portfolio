@@ -324,6 +324,7 @@ a {
 
   .header {
     flex-direction: row;
+    justify-content: space-between;
     align-items: center;
     min-height: 0;
     margin-bottom: 24px;
@@ -331,6 +332,11 @@ a {
 
   .hero-text {
     flex: 0;
+  }
+
+  .hero-text h1 {
+    display: flex;
+    align-items: center;
   }
 
   .description {
