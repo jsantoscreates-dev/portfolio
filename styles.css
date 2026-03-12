@@ -92,7 +92,8 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: clamp(80px, 10vw, 160px);
+  min-height: calc(100vh - var(--spacing-page) - 80px);
+  min-height: calc(100dvh - var(--spacing-page) - 80px);
 }
 
 .hero-text {
