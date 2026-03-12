@@ -324,25 +324,28 @@ a {
 
   .header {
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
     min-height: 0;
     margin-bottom: 24px;
   }
 
-  .navigation {
-    flex-direction: column;
-    gap: 8px;
-    align-items: flex-end;
-    padding-top: 0;
-  }
-
-  .name {
-    font-size: clamp(14px, 4vw, 20px);
+  .hero-text {
+    flex: 0;
   }
 
   .description {
-    font-size: clamp(12px, 3.5vw, 18px);
-    line-height: 1.08;
+    display: none;
+  }
+
+  .name {
+    font-size: clamp(18px, 4.5vw, 24px);
+  }
+
+  .navigation {
+    flex-direction: row;
+    gap: 24px;
+    align-items: center;
+    padding-top: 0;
   }
 
   .project-card:first-child .project-card-media {
