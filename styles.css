@@ -94,7 +94,7 @@ a {
   align-items: flex-start;
   min-height: calc(100vh - var(--spacing-page) - 38vh);
   min-height: calc(100dvh - var(--spacing-page) - 38dvh);
-  margin-bottom: clamp(44px, 3vw, 68px);
+  margin-bottom: clamp(69px, 3vw, 93px);
 }
 
 .hero-text {
