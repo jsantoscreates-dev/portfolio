@@ -92,8 +92,8 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  min-height: calc(100vh - var(--spacing-page) - 80px);
-  min-height: calc(100dvh - var(--spacing-page) - 80px);
+  min-height: calc(100vh - var(--spacing-page) - 18vh);
+  min-height: calc(100dvh - var(--spacing-page) - 18dvh);
 }
 
 .hero-text {
