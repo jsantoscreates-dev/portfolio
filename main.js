@@ -121,6 +121,7 @@
 
       var heroCopy = hero.querySelector('[data-animate=\"hero-copy\"]');
       var heroNav = hero.querySelector('[data-animate=\"hero-nav\"]');
+      var SAFETY_REVEAL_MS = 1200;
 
       // Keep it deliberate but not "landing page".
       // Use small stagger to avoid template feel.
@@ -153,6 +154,12 @@
       });
       mo.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
       setTimeout(tryStart, 700);
+
+      // Safety: never allow the hero to remain hidden (extensions / edge cases).
+      setTimeout(function() {
+        if (heroCopy && !heroCopy.classList.contains(REVEAL_CLASS)) reveal(heroCopy);
+        if (heroNav && !heroNav.classList.contains(REVEAL_CLASS)) reveal(heroNav);
+      }, SAFETY_REVEAL_MS);
     }
 
     function observeGroup(selector, options) {
