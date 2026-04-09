@@ -9,94 +9,112 @@
   --font-serif: 'Lora', Georgia, serif;
   --spacing-page: 20px;
   --spacing-gap: 20px;
+
+  --cursor-default-size: 18px;
+  --cursor-link-size: 28px;
+  --cursor-media-size: 44px;
+
+  --cursor-default-color: #2b2b2b;
+  --cursor-link-color: #111111;
+  --cursor-media-color: #1a1a1a;
+
+  --cursor-border-width: 1.5px;
+  --cursor-speed: 180ms;
+  --cursor-ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* ==========================================================================
-   Custom Cursor (editorial, desktop only)
+   Custom Cursor (overlay, editorial)
    ========================================================================== */
 
-/* Only hide native cursor when custom cursor is enabled */
-html.has-custom-cursor body {
-  cursor: none;
-}
-
-/* Preserve native cursor for text inputs / editing */
-html.has-custom-cursor input,
-html.has-custom-cursor textarea,
-html.has-custom-cursor select,
-html.has-custom-cursor [contenteditable="true"] {
-  cursor: auto;
-}
-
-.c-cursor {
-  --cursor-base: 20px;
-  --cursor-hover: 34px;
-  --cursor-media: 46px;
-
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 1px;
-  height: 1px;
-  pointer-events: none;
-  z-index: 2147483647;
-  opacity: 0;
-  transform: translate3d(-999px, -999px, 0);
-
-  /* Invert automatically over light/dark backgrounds */
-  mix-blend-mode: difference;
-}
-
-/* Slightly larger on large desktops */
-@media (min-width: 1400px) {
-  .c-cursor {
-    --cursor-base: 23px;
-    --cursor-hover: 36px;
-    --cursor-media: 48px;
+@media (min-width: 1440px) {
+  :root {
+    --cursor-default-size: 20px;
+    --cursor-link-size: 30px;
+    --cursor-media-size: 48px;
   }
 }
 
-.c-cursor__ring {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: var(--cursor-base);
-  height: var(--cursor-base);
-  transform: translate(-50%, -50%);
-  border-radius: 999px;
-
-  /* “difference” expects light ink */
-  background: rgba(255, 255, 255, 0.95);
-
-  /* A little “ink” without looking trendy */
-  transition: width 180ms cubic-bezier(0.16, 1, 0.3, 1),
-    height 180ms cubic-bezier(0.16, 1, 0.3, 1),
-    opacity 180ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-html.has-custom-cursor .c-cursor.is-visible {
-  opacity: 1;
-}
-
-html.has-custom-cursor .c-cursor.is-hover .c-cursor__ring {
-  width: var(--cursor-hover);
-  height: var(--cursor-hover);
-  opacity: 0.9;
-}
-
-html.has-custom-cursor .c-cursor.is-media .c-cursor__ring {
-  width: var(--cursor-media);
-  height: var(--cursor-media);
-  opacity: 0.85;
-}
-
-/* Never show on touch/coarse pointer */
-@media (pointer: coarse), (hover: none) {
-  html.has-custom-cursor body {
-    cursor: auto;
+@media (min-width: 1920px) {
+  :root {
+    --cursor-default-size: 22px;
+    --cursor-link-size: 34px;
+    --cursor-media-size: 52px;
   }
-  .c-cursor {
-    display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html.has-custom-cursor,
+  html.has-custom-cursor body,
+  html.has-custom-cursor a,
+  html.has-custom-cursor button,
+  html.has-custom-cursor [role="button"] {
+    cursor: none !important;
+  }
+
+  .custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--cursor-default-size);
+    height: var(--cursor-default-size);
+    margin-left: calc(var(--cursor-default-size) * -0.5);
+    margin-top: calc(var(--cursor-default-size) * -0.5);
+    border-radius: 9999px;
+    background: var(--cursor-default-color);
+    pointer-events: none;
+    z-index: 2147483647;
+    opacity: 0;
+    transition:
+      width var(--cursor-speed) var(--cursor-ease),
+      height var(--cursor-speed) var(--cursor-ease),
+      margin-left var(--cursor-speed) var(--cursor-ease),
+      margin-top var(--cursor-speed) var(--cursor-ease),
+      background-color var(--cursor-speed) var(--cursor-ease),
+      border-color var(--cursor-speed) var(--cursor-ease),
+      opacity 140ms ease,
+      transform var(--cursor-speed) var(--cursor-ease);
+    will-change: transform, width, height, opacity;
+  }
+
+  .custom-cursor.is-visible {
+    opacity: 1;
+  }
+
+  .custom-cursor.is-link {
+    width: var(--cursor-link-size);
+    height: var(--cursor-link-size);
+    margin-left: calc(var(--cursor-link-size) * -0.5);
+    margin-top: calc(var(--cursor-link-size) * -0.5);
+    background: var(--cursor-link-color);
+    border: none;
+  }
+
+  .custom-cursor.is-media {
+    width: var(--cursor-media-size);
+    height: var(--cursor-media-size);
+    margin-left: calc(var(--cursor-media-size) * -0.5);
+    margin-top: calc(var(--cursor-media-size) * -0.5);
+    background: transparent;
+    border: var(--cursor-border-width) solid var(--cursor-media-color);
+  }
+
+  .custom-cursor.is-hidden {
+    opacity: 0;
+  }
+}
+
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .custom-cursor {
+    display: none !important;
+  }
+
+  html,
+  body,
+  a,
+  button,
+  [role="button"] {
+    cursor: auto !important;
   }
 }
 
@@ -108,6 +126,7 @@ html:not(.fonts-loaded) body {
 html.fonts-loaded body {
   visibility: visible;
 }
+
 
 /* ==========================================================================
    Motion System — semantic roles via data-animate

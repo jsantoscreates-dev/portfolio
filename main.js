@@ -21,100 +21,73 @@
   // ==========================================================================
 
   (function initCustomCursor() {
-    if (prefersReducedMotion) return;
-
-    var canHover = false;
-    var finePointer = false;
+    var supportsCustomCursor = false;
     try {
-      canHover = window.matchMedia && window.matchMedia('(hover: hover)').matches;
-      finePointer = window.matchMedia && window.matchMedia('(pointer: fine)').matches;
+      supportsCustomCursor =
+        window.matchMedia('(hover: hover) and (pointer: fine)').matches &&
+        !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     } catch (e) {}
 
-    if (!canHover || !finePointer) return;
+    if (!supportsCustomCursor) return;
 
-    var cursor = document.querySelector('.c-cursor');
+    var cursor = document.querySelector('.custom-cursor');
     if (!cursor) return;
 
     document.documentElement.classList.add('has-custom-cursor');
 
-    var ring = cursor.querySelector('.c-cursor__ring');
-    if (!ring) return;
-
-    var targetX = -999;
-    var targetY = -999;
-    var currentX = targetX;
-    var currentY = targetY;
-    var rafId = 0;
-    var isVisible = false;
-
-    function lerp(a, b, t) {
-      return a + (b - a) * t;
-    }
+    var mouseX = window.innerWidth / 2;
+    var mouseY = window.innerHeight / 2;
+    var currentX = mouseX;
+    var currentY = mouseY;
+    var ease = 0.18;
 
     function render() {
-      currentX = lerp(currentX, targetX, 0.22);
-      currentY = lerp(currentY, targetY, 0.22);
-      cursor.style.transform = 'translate3d(' + currentX + 'px,' + currentY + 'px,0)';
-      rafId = requestAnimationFrame(render);
+      currentX += (mouseX - currentX) * ease;
+      currentY += (mouseY - currentY) * ease;
+      cursor.style.transform = 'translate3d(' + currentX + 'px, ' + currentY + 'px, 0)';
+      requestAnimationFrame(render);
     }
 
-    function setStatesFromTarget(t) {
-      if (!t || !t.closest) return;
-
-      var nativeZone = t.closest('input, textarea, select, [contenteditable=\"true\"]');
-      if (nativeZone) {
-        cursor.classList.remove('is-hover');
-        cursor.classList.remove('is-media');
-        cursor.classList.remove('is-visible');
-        isVisible = false;
-        return;
-      }
-
-      var interactive = t.closest('a, button, [role=\"button\"], [data-cursor=\"hover\"]');
-      var media = t.closest('.project-card-media, .about-image-wrapper, [data-cursor=\"media\"]');
-
-      cursor.classList.toggle('is-hover', !!interactive);
-      cursor.classList.toggle('is-media', !!media);
-    }
-
-    document.addEventListener('mousemove', function(e) {
-      targetX = e.clientX;
-      targetY = e.clientY;
-
-      if (!isVisible) {
-        cursor.classList.add('is-visible');
-        isVisible = true;
-      }
-
-      setStatesFromTarget(e.target);
-    }, { passive: true });
+    window.addEventListener('mousemove', function(e) {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      cursor.classList.add('is-visible');
+      cursor.classList.remove('is-hidden');
+    });
 
     window.addEventListener('mouseleave', function() {
-      cursor.classList.remove('is-visible');
-      isVisible = false;
-      targetX = -999;
-      targetY = -999;
+      cursor.classList.add('is-hidden');
+      cursor.classList.remove('is-visible', 'is-link', 'is-media');
     });
 
     window.addEventListener('mouseenter', function() {
-      if (!isVisible) {
-        cursor.classList.add('is-visible');
-        isVisible = true;
-      }
+      cursor.classList.add('is-visible');
+      cursor.classList.remove('is-hidden');
     });
 
-    rafId = requestAnimationFrame(render);
-
-    document.addEventListener('visibilitychange', function() {
-      if (document.hidden) {
-        if (rafId) cancelAnimationFrame(rafId);
-        rafId = 0;
-        cursor.classList.remove('is-visible');
-        isVisible = false;
-      } else if (!rafId) {
-        rafId = requestAnimationFrame(render);
-      }
+    var linkTargets = document.querySelectorAll('a, button, [role="button"]');
+    linkTargets.forEach(function(el) {
+      el.addEventListener('mouseenter', function() {
+        cursor.classList.add('is-link');
+        cursor.classList.remove('is-media');
+      });
+      el.addEventListener('mouseleave', function() {
+        cursor.classList.remove('is-link');
+      });
     });
+
+    var mediaTargets = document.querySelectorAll('.project-card, .project-card-media, img, video');
+    mediaTargets.forEach(function(el) {
+      el.addEventListener('mouseenter', function() {
+        cursor.classList.add('is-media');
+        cursor.classList.remove('is-link');
+      });
+      el.addEventListener('mouseleave', function() {
+        cursor.classList.remove('is-media');
+      });
+    });
+
+    render();
   })();
 
   // ==========================================================================
