@@ -6,6 +6,14 @@
 (function() {
   'use strict';
 
+  // Add a JS hook class so CSS can hide/reveal safely.
+  document.documentElement.classList.add('js');
+
+  var prefersReducedMotion = false;
+  try {
+    prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  } catch (e) {}
+
   // ==========================================================================
   // Sticky Navigation
   // ==========================================================================
@@ -79,129 +87,127 @@
   // Scroll Reveal — sequential, one element at a time
   // ==========================================================================
 
-  var allRevealEls = document.querySelectorAll('.reveal-text, .fade-media');
-  var revealQueue = [];
-  var isRevealing = false;
-  var isMobile = window.innerWidth <= 600;
-  var REVEAL_DURATION = 1.6; // seconds
-  var STAGGER = isMobile ? 250 : 400; // ms between each element
-  var SCROLL_THRESHOLD = isMobile ? 0.70 : 0.85;
+  // New motion architecture — semantic roles via data-animate.
+  // - No queue-based "one at a time" reveals.
+  // - Different behaviors per role: hero / media / title / copy / cta.
+  // - IO-driven, low state, no scroll thrash.
 
-  allRevealEls.forEach(function(el) {
-    revealQueue.push({
-      el: el,
-      triggered: false,
-      done: false
-    });
-  });
+  var Animated = (function() {
+    var REVEAL_CLASS = 'is-revealed';
 
-  // Split into header elements (load) and content elements (scroll)
-  var headerEls = [];
-  var scrollEls = [];
+    function qsAll(selector, root) {
+      return Array.prototype.slice.call((root || document).querySelectorAll(selector));
+    }
 
-  var firstMediaFound = false;
-  var firstProjectDone = false;
+    function reveal(el) {
+      if (!el || el.classList.contains(REVEAL_CLASS)) return;
+      el.classList.add(REVEAL_CLASS);
+    }
 
-  revealQueue.forEach(function(item) {
-    var isHeader = item.el.closest('.header') || item.el.closest('.header-bar');
-    var isFirstMedia = !firstMediaFound && item.el.classList.contains('fade-media');
-    var firstProjectCard = document.querySelector('.project-card');
-    var isFirstProjectContent = isMobile && !firstProjectDone && firstProjectCard && firstProjectCard.contains(item.el) && !item.el.classList.contains('fade-media');
-    var aboutSection = document.querySelector('.about');
-    var isAboutContent = isMobile && aboutSection && aboutSection.contains(item.el);
+    function revealAll(selector) {
+      qsAll(selector).forEach(reveal);
+    }
 
-    if (isHeader || isFirstMedia || isFirstProjectContent || isAboutContent) {
-      if (isFirstMedia) firstMediaFound = true;
-      headerEls.push(item);
-    } else {
-      if (firstMediaFound && firstProjectCard && firstProjectCard.contains(item.el)) {
-        firstProjectDone = true;
+    function initReducedMotion() {
+      revealAll('[data-animate]');
+      return true;
+    }
+
+    function initHero() {
+      var hero = document.querySelector('[data-animate=\"hero\"]');
+      if (!hero) return;
+
+      var heroCopy = hero.querySelector('[data-animate=\"hero-copy\"]');
+      var heroNav = hero.querySelector('[data-animate=\"hero-nav\"]');
+
+      // Keep it deliberate but not "landing page".
+      // Use small stagger to avoid template feel.
+      // If fonts-loaded is present, we start immediately; otherwise a short delay.
+      var start = function() {
+        if (heroCopy) reveal(heroCopy);
+        setTimeout(function() {
+          if (heroNav) reveal(heroNav);
+        }, 140);
+      };
+
+      if (document.documentElement.classList.contains('fonts-loaded')) {
+        requestAnimationFrame(start);
+        return;
       }
-      scrollEls.push(item);
-    }
-  });
 
-  function revealItem(item) {
-    item.triggered = true;
-    item.el.style.transition = 'clip-path ' + REVEAL_DURATION + 's cubic-bezier(0.16, 1, 0.3, 1)';
-    item.el.style.clipPath = 'inset(0 0% 0 0)';
-    item.el.classList.add('revealed');
-  }
+      // Fallback: don't block forever if fonts hang.
+      var started = false;
+      var tryStart = function() {
+        if (started) return;
+        started = true;
+        start();
+      };
 
-  // Reveal header elements sequentially on load
-  function revealHeader(index) {
-    if (index >= headerEls.length) {
-      // Header done, now listen for scroll reveals
-      initialDone = true;
-      return;
-    }
-    revealItem(headerEls[index]);
-    isRevealing = true;
-    setTimeout(function() {
-      isRevealing = false;
-      revealHeader(index + 1);
-    }, STAGGER);
-  }
-
-  // Reveal scroll elements one at a time when in viewport
-  var initialDone = false;
-
-  function revealNextScroll() {
-    if (!initialDone || isRevealing) return;
-
-    for (var i = 0; i < scrollEls.length; i++) {
-      var item = scrollEls[i];
-      if (item.triggered) continue;
-
-      var rect = item.el.getBoundingClientRect();
-      if (rect.top > window.innerHeight * SCROLL_THRESHOLD) break;
-
-      revealItem(item);
-      isRevealing = true;
-      setTimeout(function() {
-        isRevealing = false;
-        revealNextScroll();
-      }, STAGGER);
-
-      return;
-    }
-  }
-
-  // Scroll handler
-  var ticking = false;
-
-  function onScroll() {
-    if (!ticking) {
-      ticking = true;
-      requestAnimationFrame(function() {
-        revealNextScroll();
-        ticking = false;
-      });
-    }
-  }
-
-  if (revealQueue.length > 0) {
-    window.addEventListener('scroll', onScroll, { passive: true });
-
-    // Wait for fonts to load, then start header reveal
-    function startReveal() {
-      setTimeout(function() {
-        revealHeader(0);
-      }, 1200);
-    }
-
-    if (document.documentElement.classList.contains('fonts-loaded')) {
-      startReveal();
-    } else {
-      var fontObserver = new MutationObserver(function() {
+      var mo = new MutationObserver(function() {
         if (document.documentElement.classList.contains('fonts-loaded')) {
-          fontObserver.disconnect();
-          startReveal();
+          mo.disconnect();
+          tryStart();
         }
       });
-      fontObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-      setTimeout(startReveal, 1500);
+      mo.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+      setTimeout(tryStart, 700);
     }
-  }
+
+    function observeGroup(selector, options) {
+      var els = qsAll(selector);
+      if (els.length === 0) return;
+
+      var obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (!entry.isIntersecting) return;
+          reveal(entry.target);
+          obs.unobserve(entry.target);
+        });
+      }, options);
+
+      els.forEach(function(el) { obs.observe(el); });
+    }
+
+    function initScrollMotion() {
+      // Media: a touch more presence, reveal earlier.
+      observeGroup('[data-animate=\"media\"]', {
+        root: null,
+        threshold: 0.18,
+        rootMargin: '0px 0px -10% 0px'
+      });
+
+      // Titles: crisp + quick.
+      observeGroup('[data-animate=\"title\"]', {
+        root: null,
+        threshold: 0.25,
+        rootMargin: '0px 0px -12% 0px'
+      });
+
+      // Copy blocks: softer, slightly later.
+      observeGroup('[data-animate=\"copy\"]', {
+        root: null,
+        threshold: 0.3,
+        rootMargin: '0px 0px -8% 0px'
+      });
+
+      // CTAs: minimal motion; mostly hover does the work.
+      observeGroup('[data-animate=\"cta\"]', {
+        root: null,
+        threshold: 0.55,
+        rootMargin: '0px 0px -6% 0px'
+      });
+    }
+
+    function init() {
+      if (prefersReducedMotion) return initReducedMotion();
+      initHero();
+      initScrollMotion();
+      return true;
+    }
+
+    return { init: init };
+  })();
+
+  Animated.init();
 
 })();

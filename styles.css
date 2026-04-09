@@ -21,27 +21,102 @@ html.fonts-loaded body {
 }
 
 /* ==========================================================================
-   Scroll Reveal — Text (clip-path mask, left to right)
+   Motion System — semantic roles via data-animate
    ========================================================================== */
 
-.reveal-text {
-  clip-path: inset(0 100% 0 0);
+/*
+  Principles:
+  - Default (no JS): content is visible (no "blank page" failure mode).
+  - With JS enabled (html.js): elements start in a hidden state and reveal.
+  - Reduced motion: reveal instantly.
+*/
+
+html.js [data-animate] {
+  will-change: transform, opacity;
 }
 
-.reveal-text.revealed {
-  clip-path: inset(0 0% 0 0);
+html.js [data-animate]:not(.is-revealed) {
+  opacity: 0;
 }
 
-/* ==========================================================================
-   Scroll Reveal — Media (fade + subtle rise)
-   ========================================================================== */
-
-.fade-media {
-  clip-path: inset(0 100% 0 0);
+/* Hero: typographic, strongest moment, still restrained */
+html.js [data-animate="hero-copy"]:not(.is-revealed) {
+  opacity: 0;
+  transform: translateY(10px);
 }
 
-.fade-media.revealed {
-  clip-path: inset(0 0% 0 0);
+html.js [data-animate="hero-copy"].is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html.js [data-animate="hero-nav"]:not(.is-revealed) {
+  opacity: 0;
+}
+
+html.js [data-animate="hero-nav"].is-revealed {
+  opacity: 1;
+  transition: opacity 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Media: reveal as a visual surface (not the same as text) */
+html.js [data-animate="media"]:not(.is-revealed) {
+  opacity: 0;
+  transform: scale(0.992);
+}
+
+html.js [data-animate="media"].is-revealed {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 650ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Titles: crisp, minimal */
+html.js [data-animate="title"]:not(.is-revealed) {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+html.js [data-animate="title"].is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 420ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Copy: soft and secondary */
+html.js [data-animate="copy"]:not(.is-revealed) {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+html.js [data-animate="copy"].is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 520ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 800ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* CTA: minimal motion, mostly hover */
+html.js [data-animate="cta"]:not(.is-revealed) {
+  opacity: 0;
+}
+
+html.js [data-animate="cta"].is-revealed {
+  opacity: 1;
+  transition: opacity 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.js [data-animate],
+  html.js [data-animate]:not(.is-revealed) {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }
 
 /* ==========================================================================
