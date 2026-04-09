@@ -112,8 +112,8 @@ a {
   font-family: var(--font-sans);
   font-size: clamp(32px, 6.67vw, 96px);
   font-weight: 400;
-  letter-spacing: -0.6px;
-  line-height: 1.08;
+  letter-spacing: -1.536px;
+  line-height: 1.17;
 }
 
 .description {
@@ -121,8 +121,8 @@ a {
   font-family: var(--font-serif);
   font-size: clamp(28px, 5.56vw, 80px);
   font-weight: 400;
-  letter-spacing: -0.32px;
-  line-height: 1.15;
+  letter-spacing: -1.12px;
+  line-height: 1.2;
 }
 
 /* ==========================================================================
@@ -139,10 +139,9 @@ a {
 
 .nav-link {
   font-family: var(--font-sans);
-  font-size: clamp(18px, 2.22vw, 32px);
+  font-size: clamp(16px, 1.67vw, 24px);
   font-weight: 400;
-  letter-spacing: -0.032px;
-  line-height: 1.19;
+  line-height: 1.33;
   position: relative;
   transition: opacity 0.3s ease;
   min-height: 40px;
@@ -179,10 +178,9 @@ a {
 
 .sticky-logo {
   font-family: var(--font-sans);
-  font-size: clamp(18px, 2.22vw, 32px);
+  font-size: clamp(16px, 1.67vw, 24px);
   font-weight: 400;
-  letter-spacing: -0.032px;
-  line-height: 1.19;
+  line-height: 1.33;
   min-height: 40px;
   display: inline-flex;
   align-items: center;
@@ -238,10 +236,10 @@ a {
 
 .project-card-title {
   font-family: var(--font-sans);
-  font-size: clamp(28px, 5vw, 64px);
+  font-size: clamp(24px, 4.17vw, 60px);
   font-weight: 400;
-  line-height: 1.125;
-  letter-spacing: -0.4px;
+  line-height: 1.2;
+  letter-spacing: -0.6px;
   text-transform: uppercase;
   width: 55.6%;
   flex-shrink: 0;
@@ -256,10 +254,10 @@ a {
 
 .project-card-text {
   font-family: var(--font-serif);
-  font-size: clamp(16px, 1.875vw, 24px);
+  font-size: clamp(14px, 1.39vw, 20px);
   font-weight: 400;
-  line-height: 1.42;
-  letter-spacing: 0.024px;
+  line-height: 1.4;
+  letter-spacing: 0.08px;
 }
 
 .project-card-text p {
@@ -267,22 +265,22 @@ a {
 }
 
 .project-card-text p + p {
-  margin-top: 1.42em;
+  margin-top: 1.4em;
 }
 
 .project-card-link {
   font-family: var(--font-sans);
-  font-size: clamp(16px, 1.56vw, 20px);
+  font-size: clamp(14px, 1.39vw, 20px);
   font-weight: 400;
   line-height: 1.4;
-  letter-spacing: 0.05px;
+  letter-spacing: 0.08px;
   text-transform: uppercase;
-  text-decoration: underline;
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-primary);
   transition: opacity 0.3s ease;
   min-height: 40px;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
 }
 
 .project-card-link:hover {
@@ -378,10 +376,9 @@ a {
 
 .header-bar-logo {
   font-family: var(--font-sans);
-  font-size: clamp(18px, 2.22vw, 32px);
+  font-size: clamp(16px, 1.67vw, 24px);
   font-weight: 400;
-  letter-spacing: -0.032px;
-  line-height: 1.19;
+  line-height: 1.33;
   min-height: 40px;
   display: inline-flex;
   align-items: center;
@@ -432,10 +429,10 @@ a {
 
 .about-title {
   font-family: var(--font-sans);
-  font-size: clamp(28px, 5vw, 64px);
+  font-size: clamp(24px, 4.17vw, 60px);
   font-weight: 400;
-  line-height: 1.125;
-  letter-spacing: -0.4px;
+  line-height: 1.2;
+  letter-spacing: -0.6px;
   text-transform: uppercase;
   width: 55.6%;
   flex-shrink: 0;
@@ -450,10 +447,10 @@ a {
 
 .about-text {
   font-family: var(--font-serif);
-  font-size: clamp(16px, 1.875vw, 24px);
+  font-size: clamp(14px, 1.39vw, 20px);
   font-weight: 400;
-  line-height: 1.42;
-  letter-spacing: 0.024px;
+  line-height: 1.4;
+  letter-spacing: 0.08px;
 }
 
 .about-text p {
@@ -461,22 +458,22 @@ a {
 }
 
 .about-text p + p {
-  margin-top: 1.42em;
+  margin-top: 1.4em;
 }
 
 .about-link {
   font-family: var(--font-sans);
-  font-size: clamp(16px, 1.56vw, 20px);
+  font-size: clamp(14px, 1.39vw, 20px);
   font-weight: 400;
   line-height: 1.4;
-  letter-spacing: 0.05px;
+  letter-spacing: 0.08px;
   text-transform: uppercase;
-  text-decoration: underline;
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-primary);
   transition: opacity 0.3s ease;
   min-height: 40px;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
 }
 
 .about-link:hover {
