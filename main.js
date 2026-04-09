@@ -17,6 +17,107 @@
   } catch (e) {}
 
   // ==========================================================================
+  // Custom Cursor (desktop only, disabled for reduced-motion)
+  // ==========================================================================
+
+  (function initCustomCursor() {
+    if (prefersReducedMotion) return;
+
+    var canHover = false;
+    var finePointer = false;
+    try {
+      canHover = window.matchMedia && window.matchMedia('(hover: hover)').matches;
+      finePointer = window.matchMedia && window.matchMedia('(pointer: fine)').matches;
+    } catch (e) {}
+
+    if (!canHover || !finePointer) return;
+
+    var cursor = document.querySelector('.c-cursor');
+    if (!cursor) return;
+
+    document.documentElement.classList.add('has-custom-cursor');
+
+    var ring = cursor.querySelector('.c-cursor__ring');
+    if (!ring) return;
+
+    var targetX = -999;
+    var targetY = -999;
+    var currentX = targetX;
+    var currentY = targetY;
+    var rafId = 0;
+    var isVisible = false;
+
+    function lerp(a, b, t) {
+      return a + (b - a) * t;
+    }
+
+    function render() {
+      currentX = lerp(currentX, targetX, 0.22);
+      currentY = lerp(currentY, targetY, 0.22);
+      cursor.style.transform = 'translate3d(' + currentX + 'px,' + currentY + 'px,0)';
+      rafId = requestAnimationFrame(render);
+    }
+
+    function setStatesFromTarget(t) {
+      if (!t || !t.closest) return;
+
+      var nativeZone = t.closest('input, textarea, select, [contenteditable=\"true\"]');
+      if (nativeZone) {
+        cursor.classList.remove('is-hover');
+        cursor.classList.remove('is-media');
+        cursor.classList.remove('is-visible');
+        isVisible = false;
+        return;
+      }
+
+      var interactive = t.closest('a, button, [role=\"button\"], [data-cursor=\"hover\"]');
+      var media = t.closest('.project-card-media, .about-image-wrapper, [data-cursor=\"media\"]');
+
+      cursor.classList.toggle('is-hover', !!interactive);
+      cursor.classList.toggle('is-media', !!media);
+    }
+
+    document.addEventListener('mousemove', function(e) {
+      targetX = e.clientX;
+      targetY = e.clientY;
+
+      if (!isVisible) {
+        cursor.classList.add('is-visible');
+        isVisible = true;
+      }
+
+      setStatesFromTarget(e.target);
+    }, { passive: true });
+
+    window.addEventListener('mouseleave', function() {
+      cursor.classList.remove('is-visible');
+      isVisible = false;
+      targetX = -999;
+      targetY = -999;
+    });
+
+    window.addEventListener('mouseenter', function() {
+      if (!isVisible) {
+        cursor.classList.add('is-visible');
+        isVisible = true;
+      }
+    });
+
+    rafId = requestAnimationFrame(render);
+
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) {
+        if (rafId) cancelAnimationFrame(rafId);
+        rafId = 0;
+        cursor.classList.remove('is-visible');
+        isVisible = false;
+      } else if (!rafId) {
+        rafId = requestAnimationFrame(render);
+      }
+    });
+  })();
+
+  // ==========================================================================
   // Sticky Navigation
   // ==========================================================================
 
