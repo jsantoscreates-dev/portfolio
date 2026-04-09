@@ -133,7 +133,15 @@
         }, 140);
       };
 
+      // Safety: never allow the hero to remain hidden (extensions / edge cases).
+      // Runs regardless of font-loading path.
+      setTimeout(function() {
+        if (heroCopy && !heroCopy.classList.contains(REVEAL_CLASS)) reveal(heroCopy);
+        if (heroNav && !heroNav.classList.contains(REVEAL_CLASS)) reveal(heroNav);
+      }, SAFETY_REVEAL_MS);
+
       if (document.documentElement.classList.contains('fonts-loaded')) {
+        // Start as soon as possible; avoid waiting on IO or other async hooks.
         requestAnimationFrame(start);
         return;
       }
@@ -154,12 +162,6 @@
       });
       mo.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
       setTimeout(tryStart, 700);
-
-      // Safety: never allow the hero to remain hidden (extensions / edge cases).
-      setTimeout(function() {
-        if (heroCopy && !heroCopy.classList.contains(REVEAL_CLASS)) reveal(heroCopy);
-        if (heroNav && !heroNav.classList.contains(REVEAL_CLASS)) reveal(heroNav);
-      }, SAFETY_REVEAL_MS);
     }
 
     function observeGroup(selector, options) {
