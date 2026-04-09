@@ -127,6 +127,8 @@
       // Use small stagger to avoid template feel.
       // If fonts-loaded is present, we start immediately; otherwise a short delay.
       var start = function() {
+        // Reveal the hero container first so child opacity isn't compounded.
+        reveal(hero);
         if (heroCopy) reveal(heroCopy);
         setTimeout(function() {
           if (heroNav) reveal(heroNav);
@@ -136,6 +138,7 @@
       // Safety: never allow the hero to remain hidden (extensions / edge cases).
       // Runs regardless of font-loading path.
       setTimeout(function() {
+        if (hero && !hero.classList.contains(REVEAL_CLASS)) reveal(hero);
         if (heroCopy && !heroCopy.classList.contains(REVEAL_CLASS)) reveal(heroCopy);
         if (heroNav && !heroNav.classList.contains(REVEAL_CLASS)) reveal(heroNav);
       }, SAFETY_REVEAL_MS);
