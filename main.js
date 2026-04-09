@@ -63,6 +63,30 @@
   sessionStorage.removeItem('fromStaticHeader');
 
   // ==========================================================================
+  // Current page indicator (aria-current)
+  // ==========================================================================
+
+  (function setCurrentNavLink() {
+    var path = (window.location.pathname || '').toLowerCase();
+    var isAbout = path.endsWith('/about.html') || path.endsWith('about.html');
+
+    var currentHref = isAbout ? 'about.html' : 'index.html';
+    var candidates = document.querySelectorAll('a.nav-link[href]');
+
+    candidates.forEach(function(a) {
+      var href = (a.getAttribute('href') || '').toLowerCase();
+      // Only mark internal page links.
+      if (href === 'about.html' || href === 'index.html' || href === './about.html' || href === './index.html') {
+        if (href.endsWith(currentHref)) {
+          a.setAttribute('aria-current', 'page');
+        } else {
+          a.removeAttribute('aria-current');
+        }
+      }
+    });
+  })();
+
+  // ==========================================================================
   // Video Autoplay on Viewport Visibility
   // ==========================================================================
 

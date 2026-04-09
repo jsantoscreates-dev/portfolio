@@ -222,6 +222,23 @@ a {
   min-height: 40px;
   display: inline-flex;
   align-items: center;
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+  transition: background-size 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-link:hover {
+  opacity: 0.75;
+  background-size: 100% 1px;
+}
+
+.nav-link[aria-current="page"] {
+  opacity: 1;
+  background-size: 100% 1px;
 }
 
 /* ==========================================================================
@@ -352,15 +369,24 @@ a {
   letter-spacing: 0.08px;
   text-transform: uppercase;
   text-decoration: none;
-  border-bottom: 1px solid var(--color-primary);
-  transition: opacity 0.3s ease;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 1px;
+  transition: opacity 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-size 220ms cubic-bezier(0.16, 1, 0.3, 1);
   min-height: 40px;
   display: inline-flex;
   align-items: center;
+  gap: 6px;
 }
 
 .project-card-link:hover {
   opacity: 0.6;
+}
+
+.project-card-link:hover .link-arrow {
+  transform: translateX(2px);
 }
 
 /* ==========================================================================
@@ -549,15 +575,29 @@ a {
   letter-spacing: 0.08px;
   text-transform: uppercase;
   text-decoration: none;
-  border-bottom: 1px solid var(--color-primary);
-  transition: opacity 0.3s ease;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 1px;
+  transition: opacity 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-size 220ms cubic-bezier(0.16, 1, 0.3, 1);
   min-height: 40px;
   display: inline-flex;
   align-items: center;
+  gap: 6px;
 }
 
 .about-link:hover {
   opacity: 0.6;
+}
+
+.about-link:hover .link-arrow {
+  transform: translateX(2px);
+}
+
+.link-arrow {
+  display: inline-block;
+  transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* ==========================================================================
