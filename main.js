@@ -6,7 +6,9 @@
 (function() {
   'use strict';
 
-  // Add a JS hook class so CSS can hide/reveal safely.
+  // Add a JS hook class.
+  // IMPORTANT: We only enable "motion hiding" after init succeeds (js-motion),
+  // so a JS error never results in invisible content.
   document.documentElement.classList.add('js');
 
   var prefersReducedMotion = false;
@@ -208,6 +210,11 @@
     return { init: init };
   })();
 
-  Animated.init();
+  try {
+    document.documentElement.classList.add('js-motion');
+    Animated.init();
+  } catch (e) {
+    document.documentElement.classList.remove('js-motion');
+  }
 
 })();

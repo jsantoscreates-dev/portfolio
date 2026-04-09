@@ -31,43 +31,43 @@ html.fonts-loaded body {
   - Reduced motion: reveal instantly.
 */
 
-html.js [data-animate] {
+html.js-motion [data-animate] {
   will-change: transform, opacity;
 }
 
-html.js [data-animate]:not(.is-revealed) {
+html.js-motion [data-animate]:not(.is-revealed) {
   opacity: 0;
 }
 
 /* Hero: typographic, strongest moment, still restrained */
-html.js [data-animate="hero-copy"]:not(.is-revealed) {
+html.js-motion [data-animate="hero-copy"]:not(.is-revealed) {
   opacity: 0;
   transform: translateY(10px);
 }
 
-html.js [data-animate="hero-copy"].is-revealed {
+html.js-motion [data-animate="hero-copy"].is-revealed {
   opacity: 1;
   transform: translateY(0);
   transition: opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
     transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-html.js [data-animate="hero-nav"]:not(.is-revealed) {
+html.js-motion [data-animate="hero-nav"]:not(.is-revealed) {
   opacity: 0;
 }
 
-html.js [data-animate="hero-nav"].is-revealed {
+html.js-motion [data-animate="hero-nav"].is-revealed {
   opacity: 1;
   transition: opacity 500ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Media: reveal as a visual surface (not the same as text) */
-html.js [data-animate="media"]:not(.is-revealed) {
+html.js-motion [data-animate="media"]:not(.is-revealed) {
   opacity: 0;
   transform: scale(0.992);
 }
 
-html.js [data-animate="media"].is-revealed {
+html.js-motion [data-animate="media"].is-revealed {
   opacity: 1;
   transform: scale(1);
   transition: opacity 650ms cubic-bezier(0.16, 1, 0.3, 1),
@@ -75,12 +75,12 @@ html.js [data-animate="media"].is-revealed {
 }
 
 /* Titles: crisp, minimal */
-html.js [data-animate="title"]:not(.is-revealed) {
+html.js-motion [data-animate="title"]:not(.is-revealed) {
   opacity: 0;
   transform: translateY(6px);
 }
 
-html.js [data-animate="title"].is-revealed {
+html.js-motion [data-animate="title"].is-revealed {
   opacity: 1;
   transform: translateY(0);
   transition: opacity 420ms cubic-bezier(0.16, 1, 0.3, 1),
@@ -88,12 +88,12 @@ html.js [data-animate="title"].is-revealed {
 }
 
 /* Copy: soft and secondary */
-html.js [data-animate="copy"]:not(.is-revealed) {
+html.js-motion [data-animate="copy"]:not(.is-revealed) {
   opacity: 0;
   transform: translateY(8px);
 }
 
-html.js [data-animate="copy"].is-revealed {
+html.js-motion [data-animate="copy"].is-revealed {
   opacity: 1;
   transform: translateY(0);
   transition: opacity 520ms cubic-bezier(0.16, 1, 0.3, 1),
@@ -101,18 +101,18 @@ html.js [data-animate="copy"].is-revealed {
 }
 
 /* CTA: minimal motion, mostly hover */
-html.js [data-animate="cta"]:not(.is-revealed) {
+html.js-motion [data-animate="cta"]:not(.is-revealed) {
   opacity: 0;
 }
 
-html.js [data-animate="cta"].is-revealed {
+html.js-motion [data-animate="cta"].is-revealed {
   opacity: 1;
   transition: opacity 420ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html.js [data-animate],
-  html.js [data-animate]:not(.is-revealed) {
+  html.js-motion [data-animate],
+  html.js-motion [data-animate]:not(.is-revealed) {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
