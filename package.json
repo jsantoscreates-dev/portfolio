@@ -1,0 +1,7 @@
+{
+  "name": "portfolio",
+  "private": true,
+  "scripts": {
+    "server": "npx --yes serve . --listen 3000"
+  }
+}

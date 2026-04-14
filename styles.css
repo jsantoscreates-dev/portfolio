@@ -14,9 +14,9 @@
   --cursor-link-size: 28px;
   --cursor-media-size: 44px;
 
-  --cursor-default-color: #2b2b2b;
-  --cursor-link-color: #111111;
-  --cursor-media-color: #1a1a1a;
+  --cursor-default-color: var(--color-primary);
+  --cursor-link-color: var(--color-primary);
+  --cursor-media-color: var(--color-primary);
 
   --cursor-border-width: 1.5px;
   --cursor-speed: 180ms;
@@ -104,7 +104,7 @@
   }
 }
 
-@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+@media (hover: none), (pointer: coarse) {
   .custom-cursor {
     display: none !important;
   }
@@ -278,6 +278,7 @@ a {
   min-height: calc(100vh - var(--spacing-page) - 38vh);
   min-height: calc(100dvh - var(--spacing-page) - 38dvh);
   margin-bottom: clamp(69px, 3vw, 93px);
+  overflow: visible;
 }
 
 .hero-text {
@@ -287,7 +288,7 @@ a {
 
 .hero-text h1 {
   font-weight: 400;
-  line-height: 1;
+  line-height: 1.2;
 }
 
 .name {
@@ -296,7 +297,7 @@ a {
   font-size: clamp(32px, 6.67vw, 96px);
   font-weight: 400;
   letter-spacing: -1.536px;
-  line-height: 1.17;
+  line-height: 1.2;
 }
 
 .description {
@@ -309,7 +310,8 @@ a {
 }
 
 /* ==========================================================================
-   Navigation
+   Navigation (site header links only: sticky + hero + about bar)
+   Active page: small centered dot via a[aria-current="page"]::after
    ========================================================================== */
 
 .navigation {
@@ -318,35 +320,66 @@ a {
   gap: 24px;
   align-items: flex-start;
   flex-shrink: 0;
+  overflow: visible;
 }
 
-.nav-link {
+.sticky-links,
+.header-bar-nav {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  overflow: visible;
+}
+
+/* Editorial monochrome: muted inactive, full contrast + dot only when current */
+.sticky-links .nav-link,
+.navigation .nav-link,
+.header-bar-nav .nav-link {
   font-family: var(--font-sans);
   font-size: clamp(16px, 1.67vw, 24px);
   font-weight: 400;
-  line-height: 1.33;
+  line-height: 1.5;
   position: relative;
-  transition: opacity 0.3s ease;
-  min-height: 40px;
-  display: inline-flex;
-  align-items: center;
+  display: inline-block;
   text-decoration: none;
-  background-image: linear-gradient(currentColor, currentColor);
-  background-repeat: no-repeat;
-  background-position: 0 100%;
-  background-size: 0% 1px;
-  transition: background-size 220ms cubic-bezier(0.16, 1, 0.3, 1),
-    opacity 220ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.nav-link:hover {
-  opacity: 0.75;
-  background-size: 100% 1px;
-}
-
-.nav-link[aria-current="page"] {
+  color: var(--color-primary);
   opacity: 1;
-  background-size: 100% 1px;
+  padding-bottom: 18px;
+  overflow: visible;
+  transition: opacity 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sticky-links .nav-link:hover,
+.navigation .nav-link:hover,
+.header-bar-nav .nav-link:hover {
+  opacity: 0.88;
+}
+
+.sticky-links .nav-link[aria-current="page"],
+.navigation .nav-link[aria-current="page"],
+.header-bar-nav .nav-link[aria-current="page"] {
+  opacity: 1;
+}
+
+.sticky-links .nav-link[aria-current="page"]:hover,
+.navigation .nav-link[aria-current="page"]:hover,
+.header-bar-nav .nav-link[aria-current="page"]:hover {
+  opacity: 1;
+}
+
+.sticky-links .nav-link[aria-current="page"]::after,
+.navigation .nav-link[aria-current="page"]::after,
+.header-bar-nav .nav-link[aria-current="page"]::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 4px;
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  pointer-events: none;
 }
 
 /* ==========================================================================
@@ -368,6 +401,7 @@ a {
   transform: translateY(-100%);
   transition: opacity 0.4s ease, transform 0.4s ease;
   pointer-events: none;
+  overflow: visible;
 }
 
 .sticky-nav.visible {
@@ -380,21 +414,11 @@ a {
   font-family: var(--font-sans);
   font-size: clamp(16px, 1.67vw, 24px);
   font-weight: 400;
-  line-height: 1.33;
+  line-height: 1.5;
   min-height: 40px;
   display: inline-flex;
   align-items: center;
 }
-
-.sticky-links {
-  display: flex;
-  gap: 24px;
-}
-
-.sticky-links .nav-link {
-  opacity: 1;
-}
-
 
 /* ==========================================================================
    Projects
@@ -439,10 +463,18 @@ a {
   font-size: clamp(24px, 4.17vw, 60px);
   font-weight: 400;
   line-height: 1.2;
-  letter-spacing: -0.6px;
+  letter-spacing: -1px;
   text-transform: uppercase;
   width: 55.6%;
   flex-shrink: 0;
+}
+
+.project-card-title--stacked {
+  text-transform: uppercase;
+}
+
+.project-card-title-sub {
+  display: inline-block;
 }
 
 .project-card-info {
@@ -457,7 +489,7 @@ a {
   font-family: var(--font-serif);
   font-size: clamp(14px, 1.39vw, 20px);
   font-weight: 400;
-  line-height: 1.4;
+  line-height: 1.5;
   letter-spacing: 0.08px;
 }
 
@@ -466,31 +498,44 @@ a {
 }
 
 .project-card-text p + p {
-  margin-top: 1.4em;
+  margin-top: 0;
 }
 
 .project-card-link {
   font-family: var(--font-sans);
   font-size: clamp(14px, 1.39vw, 20px);
   font-weight: 400;
-  line-height: 1.4;
+  line-height: 28px;
   letter-spacing: 0.08px;
   text-transform: uppercase;
   text-decoration: none;
-  background-image: linear-gradient(currentColor, currentColor);
-  background-repeat: no-repeat;
-  background-position: 0 100%;
-  background-size: 100% 1px;
-  transition: opacity 220ms cubic-bezier(0.16, 1, 0.3, 1),
-    background-size 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  transition: opacity 220ms cubic-bezier(0.16, 1, 0.3, 1);
   min-height: 40px;
   display: inline-flex;
   align-items: center;
   gap: 6px;
 }
 
+.project-card-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(1);
+  transform-origin: left;
+  transition: transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 .project-card-link:hover {
   opacity: 0.6;
+}
+
+.project-card-link:hover::after {
+  transform: scaleX(0);
 }
 
 .project-card-link:hover .link-arrow {
@@ -582,6 +627,7 @@ a {
   justify-content: space-between;
   align-items: center;
   margin-bottom: clamp(80px, 15vw, 224px);
+  overflow: visible;
 }
 
 .header-bar-logo {
@@ -594,10 +640,7 @@ a {
   align-items: center;
 }
 
-.header-bar-nav {
-  display: flex;
-  gap: 24px;
-}
+/* .header-bar-nav layout: see Navigation section above */
 
 /* ==========================================================================
    About Page
@@ -683,12 +726,8 @@ a {
   letter-spacing: 0.08px;
   text-transform: uppercase;
   text-decoration: none;
-  background-image: linear-gradient(currentColor, currentColor);
-  background-repeat: no-repeat;
-  background-position: 0 100%;
-  background-size: 100% 1px;
-  transition: opacity 220ms cubic-bezier(0.16, 1, 0.3, 1),
-    background-size 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  background: none;
+  transition: opacity 220ms cubic-bezier(0.16, 1, 0.3, 1);
   min-height: 40px;
   display: inline-flex;
   align-items: center;
@@ -706,6 +745,11 @@ a {
 .link-arrow {
   display: inline-block;
   transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Figma CTAs have no arrow glyph */
+.link-arrow {
+  display: none;
 }
 
 /* ==========================================================================

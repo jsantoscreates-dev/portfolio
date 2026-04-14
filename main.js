@@ -24,8 +24,7 @@
     var supportsCustomCursor = false;
     try {
       supportsCustomCursor =
-        window.matchMedia('(hover: hover) and (pointer: fine)').matches &&
-        !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     } catch (e) {}
 
     if (!supportsCustomCursor) return;
@@ -99,7 +98,7 @@
   var headerBar = document.querySelector('.header-bar');
   var scrollTarget = heroText || headerBar;
 
-  if (scrollTarget && stickyNav) {
+  if (scrollTarget && stickyNav && typeof IntersectionObserver === 'function') {
     var navObserver = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
         if (entry.isIntersecting) {
@@ -137,36 +136,12 @@
   sessionStorage.removeItem('fromStaticHeader');
 
   // ==========================================================================
-  // Current page indicator (aria-current)
-  // ==========================================================================
-
-  (function setCurrentNavLink() {
-    var path = (window.location.pathname || '').toLowerCase();
-    var isAbout = path.endsWith('/about.html') || path.endsWith('about.html');
-
-    var currentHref = isAbout ? 'about.html' : 'index.html';
-    var candidates = document.querySelectorAll('a.nav-link[href]');
-
-    candidates.forEach(function(a) {
-      var href = (a.getAttribute('href') || '').toLowerCase();
-      // Only mark internal page links.
-      if (href === 'about.html' || href === 'index.html' || href === './about.html' || href === './index.html') {
-        if (href.endsWith(currentHref)) {
-          a.setAttribute('aria-current', 'page');
-        } else {
-          a.removeAttribute('aria-current');
-        }
-      }
-    });
-  })();
-
-  // ==========================================================================
   // Video Autoplay on Viewport Visibility
   // ==========================================================================
 
   var videos = document.querySelectorAll('.project-card-video');
 
-  if (videos.length > 0) {
+  if (videos.length > 0 && typeof IntersectionObserver === 'function') {
     var videoObserver = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
         var video = entry.target;
@@ -268,6 +243,11 @@
     function observeGroup(selector, options) {
       var els = qsAll(selector);
       if (els.length === 0) return;
+
+      if (typeof IntersectionObserver !== 'function') {
+        els.forEach(reveal);
+        return;
+      }
 
       var obs = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
