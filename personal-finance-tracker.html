@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PERSONAL FINANCE TRACKER — Jorge Santos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20260414d">
+  <script>
+    // Figma capture: ensure the page is visible + fully revealed at capture time.
+    // This only runs when the #figmacapture hash is present.
+    (function() {
+      try {
+        if (typeof location !== 'undefined' && location.hash && location.hash.indexOf('figmacapture=') !== -1) {
+          document.documentElement.classList.add('fonts-loaded', 'figma-capture');
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <style>
+    /* Capture-only overrides (no visual change in normal browsing) */
+    html.figma-capture body { visibility: visible !important; }
+    html.figma-capture [data-animate] {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  </style>
+  <script>
+    // Wait for specific fonts to load before showing content (prevents FOUT)
+    (function() {
+      var fontsLoaded = false;
+      function showContent() {
+        if (!fontsLoaded) {
+          fontsLoaded = true;
+          document.documentElement.classList.add('fonts-loaded');
+        }
+      }
+      if (document.fonts && document.fonts.load) {
+        Promise.all([
+          document.fonts.load('400 1em "Work Sans"'),
+          document.fonts.load('400 1em "Lora"')
+        ]).then(showContent).catch(showContent);
+      } else {
+        showContent();
+      }
+      setTimeout(showContent, 1000);
+    })();
+  </script>
+</head>
+<body class="pft-case-study">
+  <!-- Fixed Navigation Bar (appears on scroll) -->
+  <nav class="sticky-nav">
+    <a href="index.html" class="sticky-logo">JORGE SANTOS</a>
+    <div class="sticky-links">
+      <a href="https://drive.google.com/file/d/1BTKduk8bo3N-cz7o9et189hgbtMSdmk6/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="nav-link">RESUME</a>
+      <a href="about.html" class="nav-link">ABOUT</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <header class="header-bar">
+      <a href="index.html" class="header-bar-logo">JORGE SANTOS</a>
+      <nav class="header-bar-nav">
+        <a href="https://drive.google.com/file/d/1BTKduk8bo3N-cz7o9et189hgbtMSdmk6/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="nav-link">RESUME</a>
+        <a href="about.html" class="nav-link">ABOUT</a>
+      </nav>
+    </header>
+
+    <section class="pft" aria-label="Personal Finance Tracker case study">
+      <div class="pft-wrap">
+        <section class="pft-hero-block">
+          <div class="pft-hero-outer">
+            <div class="pft-hero">
+              <div class="pft-hero-card">
+                <video
+                  class="pft-hero-image"
+                  muted
+                  loop
+                  playsinline
+                  autoplay
+                  preload="auto"
+                >
+                  <source src="videos/Personal_Finance_Tracker.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+          </div>
+
+          <div class="pft-intro">
+            <h1 class="pft-title">
+              <span>PERSONAL </span><br>
+              <span>FINANCE TRACKER</span>
+            </h1>
+
+            <div class="pft-lede">
+              <p>
+                What if you could get monthly expense report in just one click ?<br><br>
+                Replaced manual Notion to Excel copying with:
+              </p>
+              <p>
+                <br>
+                - 3-tap expense logging<br>
+                - Live category dashboard<br>
+                -Monthly history + search<br>
+                - One-click Excel export
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="pft-context">
+          <div class="pft-context-grid">
+            <div class="pft-figure pft-figure--img pft-figure--img-cover">
+              <img
+                alt="Context workflow overview"
+                loading="lazy"
+                decoding="async"
+                src="images/projects/personal-finance-tracker/Images/Context1.png"
+              >
+            </div>
+
+            <div class="pft-context-right">
+              <div class="pft-figure pft-figure--img pft-figure--img-cover">
+                <img
+                  alt="Context workflow details"
+                  loading="lazy"
+                  decoding="async"
+                  src="images/projects/personal-finance-tracker/Images/Context2.png"
+                >
+              </div>
+
+              <div class="pft-section">
+                <h2 class="pft-section-title">CONTEXT</h2>
+                <div class="pft-section-body">
+                  <p>I was tracking my spending daily in Notion and analyzing it monthly in Excel.</p>
+                  <p>Every month I had to take time aside to calculate and extract my spending per category from Notion to an Excel file.<br><br></p>
+                  <p>The old workflow:</p>
+                  <p>- Notion → Daily expense logging</p>
+                  <p>- Excel → Monthly analysis</p>
+                  <p>- Manual filtering and copy/paste per spending category → Every single month</p>
+                  <p>- Zero real-time visibility → No spending habit insights</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="pft-problem">
+          <div class="pft-problem-grid">
+            <div class="pft-problem-left">
+              <div class="pft-figure pft-figure--img pft-figure--img-contain">
+                <img
+                  alt="Expense tracker screen"
+                  loading="lazy"
+                  decoding="async"
+                  src="images/projects/personal-finance-tracker/Images/Problem1.png"
+                >
+              </div>
+
+              <div class="pft-section">
+                <h2 class="pft-section-title">PROBLEM</h2>
+                <div class="pft-section-body">
+                  <p>The workflow was fragmented: Notion for logging, Excel for analysis.</p>
+                  <p><br>Every month, I had to copy everything by hand just to understand spending by category.</p>
+                  <p>This meant hours lost, no real-time visibility, and no easy way to spot spending habits.</p>
+                  <p>A better solution needed to combine fast logging, live category visibility, quick export, and easy monthly history.</p>
+                  <p></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="pft-figure pft-figure--img pft-figure--img-cover">
+              <img
+                alt="Research notes and planning board"
+                loading="lazy"
+                decoding="async"
+                src="images/projects/personal-finance-tracker/Images/Problem2.png"
+              >
+            </div>
+          </div>
+        </section>
+
+        <section class="pft-solution">
+          <div class="pft-solution-grid">
+            <div class="pft-figure pft-figure--img pft-figure--img-cover pft-figure--dark">
+              <img
+                alt="Solution overview"
+                loading="lazy"
+                decoding="async"
+                src="images/projects/personal-finance-tracker/Images/Solution1.png"
+              >
+            </div>
+
+            <div class="pft-solution-right">
+              <div class="pft-figure pft-figure--img pft-figure--img-cover pft-figure--dark">
+                <img
+                  alt="Solution details"
+                  loading="lazy"
+                  decoding="async"
+                  src="images/projects/personal-finance-tracker/Images/Solution2.png"
+                >
+              </div>
+
+              <div class="pft-section">
+                <h2 class="pft-section-title">SOLUTION</h2>
+                <div class="pft-section-body">
+                  <p>I designed a simple expense tracker that replaces the manual Notion-to-Excel workflow with a faster, more connected experience.</p>
+                  <p>It allows quick expense logging, live spending category insights, monthly spending history, and one-click Excel export of the monthly spends — giving me a clear view of spending without the monthly copy-paste work.</p>
+                  <p></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <div style="height: 224px;"></div>
+  </main>
+
+  <div class="custom-cursor" aria-hidden="true"></div>
+  <script src="main.js?v=20260414d"></script>
+</body>
+</html>
+

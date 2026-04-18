@@ -9,6 +9,27 @@
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=20260414d">
   <script>
+    // Figma capture: ensure the page is visible + fully revealed at capture time.
+    // This only runs when the #figmacapture hash is present.
+    (function() {
+      try {
+        if (typeof location !== 'undefined' && location.hash && location.hash.indexOf('figmacapture=') !== -1) {
+          document.documentElement.classList.add('fonts-loaded', 'figma-capture');
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <style>
+    /* Capture-only overrides (no visual change in normal browsing) */
+    html.figma-capture body { visibility: visible !important; }
+    html.figma-capture [data-animate] {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  </style>
+  <script>
     // Check BEFORE page renders if we came from same header layout
     if (sessionStorage.getItem('fromStaticHeader')) {
       document.documentElement.classList.add('no-header-animation');
@@ -63,6 +84,26 @@
     </header>
 
     <section class="projects">
+      <article class="project-card">
+        <div class="project-card-media" data-animate="media">
+          <video class="project-card-video" muted loop playsinline preload="auto">
+            <source src="videos/Personal_Finance_Tracker.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="project-card-content">
+          <h2 class="project-card-title" data-animate="title">PERSONAL <br>FINANCE TRACKER</h2>
+          <div class="project-card-info" data-animate="copy">
+            <div class="project-card-text">
+              <p>What if tracking expenses was actually fast?</p>
+              <p>Built to replace manual copying between Notion notes and Excel every month.</p>
+              <p>Quick logging, category breakdowns, monthly history, one-click Excel export.</p>
+              <p>No more wasted hours on spreadsheets.</p>
+            </div>
+            <a href="personal-finance-tracker.html" class="project-card-link" data-animate="cta"><span class="link-label">VISIT CASE STUDY</span><span class="link-arrow" aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </article>
+
       <article class="project-card">
         <div class="project-card-media" data-animate="media">
           <video class="project-card-video" muted loop playsinline preload="auto">
