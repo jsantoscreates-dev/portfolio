@@ -3,8 +3,8 @@
    ========================================================================== */
 
 :root {
-  --color-bg: #f5f5f5;
-  --color-primary: #161616;
+  --color-bg: #FFFFFF;
+  --color-primary: #1A1A1A;
   --font-sans: 'Work Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-serif: 'Lora', Georgia, serif;
   --spacing-page: 20px;
@@ -769,6 +769,258 @@ a {
   .about-info {
     width: 100%;
     gap: 32px;
+  }
+}
+
+/* ==========================================================================
+   Case Study Page
+   ========================================================================== */
+
+.case-study {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(48px, 7vw, 112px);
+}
+
+.case-study-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(32px, 6vw, 80px);
+}
+
+.case-study-row {
+  display: grid;
+  gap: var(--spacing-gap);
+}
+
+.case-study-row--two {
+  grid-template-columns: 1fr 1fr;
+}
+
+.case-study-row--one {
+  grid-template-columns: 1fr;
+}
+
+.case-study-item {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.case-study-caption {
+  max-width: 44%;
+}
+
+@media (max-width: 900px) {
+  .case-study-row--two {
+    grid-template-columns: 1fr;
+  }
+
+  .case-study-caption {
+    max-width: 100%;
+  }
+}
+
+/* ==========================================================================
+   Personal Finance Tracker — pixel layout (Figma node 2085:19)
+   ========================================================================== */
+
+body.pft-case-study .header-bar {
+  margin-bottom: 224px;
+}
+
+.pft-wrap {
+  width: 100%;
+  max-width: 1968px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(96px, 8vw, 168px);
+}
+
+.pft-hero-block {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pft-hero-outer {
+  background: var(--color-bg);
+  overflow: hidden;
+}
+
+.pft-hero {
+  width: 100%;
+  background: #1A1A1A;
+  min-height: 520px;
+}
+
+.pft-hero-card {
+  width: 100%;
+  aspect-ratio: 3936 / 2168;
+  overflow: hidden;
+}
+
+.pft-hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.pft-intro {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: clamp(40px, 10vw, 446px);
+}
+
+.pft-title {
+  font-family: var(--font-sans);
+  font-size: clamp(36px, 4.2vw, 60px);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: clamp(-0.6px, -0.03vw, -0.3px);
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin: 0;
+  white-space: normal;
+}
+
+.pft-lede {
+  width: min(866px, 100%);
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: 0.08px;
+  color: var(--color-primary);
+}
+
+.pft-lede p {
+  margin: 0;
+}
+
+.pft-context-grid,
+.pft-problem-grid,
+.pft-solution-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--spacing-gap);
+  align-items: start;
+}
+
+.pft-context-right,
+.pft-problem-left,
+.pft-solution-right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pft-figure {
+  width: 100%;
+  height: clamp(260px, 28vw, 536.484px);
+  overflow: hidden;
+}
+
+.pft-figure--light {
+  background: #F5F5F5;
+}
+
+.pft-figure--dark {
+  background: #1A1A1A;
+}
+
+.pft-figure--img {
+  background: #D5D5D5;
+  position: relative;
+}
+
+.pft-figure--img img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.pft-figure--img-cover img {
+  object-fit: cover;
+}
+
+.pft-figure--img-contain {
+  overflow: hidden;
+}
+
+.pft-figure--img-contain img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pft-section {
+  width: min(866px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.pft-section-title {
+  font-family: var(--font-sans);
+  font-size: clamp(28px, 3vw, 45px);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: clamp(-0.45px, -0.02vw, -0.2px);
+  text-transform: uppercase;
+  margin: 0;
+  color: var(--color-primary);
+}
+
+.pft-section-body {
+  font-family: var(--font-serif);
+  font-size: clamp(16px, 1.4vw, 20px);
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: 0.08px;
+  color: var(--color-primary);
+}
+
+.pft-section-body p {
+  margin: 0;
+}
+
+@media (max-width: 1100px) {
+  body.pft-case-study .header-bar {
+    margin-bottom: 112px;
+  }
+
+  .pft-hero {
+    aspect-ratio: auto;
+    padding: clamp(24px, 6vw, 48px) 0;
+  }
+
+  .pft-hero-card {
+    width: min(92vw, 900px);
+  }
+
+  .pft-hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .pft-intro {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .pft-context-grid,
+  .pft-problem-grid,
+  .pft-solution-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pft-figure {
+    height: clamp(240px, 52vw, 420px);
   }
 }
 
