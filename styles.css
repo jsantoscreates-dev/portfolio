@@ -615,6 +615,10 @@ a {
     padding-top: 0;
   }
 
+  .navigation .nav-link {
+    padding-bottom: 0;
+  }
+
 }
 
 
@@ -995,6 +999,7 @@ body.pft-case-study .header-bar {
 
   .pft-hero {
     aspect-ratio: auto;
+    min-height: 0;
     padding: clamp(24px, 6vw, 48px) 0;
   }
 
@@ -1021,6 +1026,23 @@ body.pft-case-study .header-bar {
 
   .pft-figure {
     height: clamp(240px, 52vw, 420px);
+  }
+
+  /* Dissolve pft-problem-left so images stack first, text comes last */
+  .pft-problem-left {
+    display: contents;
+  }
+
+  .pft-problem-left .pft-figure {
+    order: 1;
+  }
+
+  .pft-problem-grid > .pft-figure {
+    order: 2;
+  }
+
+  .pft-problem-left .pft-section {
+    order: 3;
   }
 }
 
