@@ -615,7 +615,8 @@ a {
     padding-top: 0;
   }
 
-  .navigation .nav-link {
+  .navigation .nav-link,
+  .header-bar-nav .nav-link {
     padding-bottom: 0;
   }
 
