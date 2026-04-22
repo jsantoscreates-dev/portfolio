@@ -9,6 +9,27 @@
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=20260414d">
   <script>
+    // Figma capture: ensure the page is visible + fully revealed at capture time.
+    // This only runs when the #figmacapture hash is present.
+    (function() {
+      try {
+        if (typeof location !== 'undefined' && location.hash && location.hash.indexOf('figmacapture=') !== -1) {
+          document.documentElement.classList.add('fonts-loaded', 'figma-capture');
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <style>
+    /* Capture-only overrides (no visual change in normal browsing) */
+    html.figma-capture body { visibility: visible !important; }
+    html.figma-capture [data-animate] {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  </style>
+  <script>
     (function() {
       var fontsLoaded = false;
       function showContent() {
@@ -66,8 +87,18 @@
       </div>
     </section>
 
-    <div style="height: 224px;"></div>
   </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span class="footer-copyright">&copy;JSANTOSCREATES. ALL RIGHTS RESERVED</span>
+      <nav class="footer-nav" aria-label="Social links">
+        <a href="https://www.instagram.com/jsantoscreates/" target="_blank" rel="noopener noreferrer" class="nav-link">INSTAGRAM</a>
+        <a href="https://www.linkedin.com/in/jorge-santos-64bb52206/" target="_blank" rel="noopener noreferrer" class="nav-link">LINKEDIN</a>
+        <a href="mailto:jsantoscreates@gmail.com" class="nav-link">EMAIL</a>
+      </nav>
+    </div>
+  </footer>
 
   <div class="custom-cursor" aria-hidden="true"></div>
   <script src="main.js?v=20260414d"></script>

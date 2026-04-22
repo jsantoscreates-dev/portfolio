@@ -334,7 +334,8 @@ a {
 /* Editorial monochrome: muted inactive, full contrast + dot only when current */
 .sticky-links .nav-link,
 .navigation .nav-link,
-.header-bar-nav .nav-link {
+.header-bar-nav .nav-link,
+.footer-nav .nav-link {
   font-family: var(--font-sans);
   font-size: clamp(16px, 1.67vw, 24px);
   font-weight: 400;
@@ -351,7 +352,8 @@ a {
 
 .sticky-links .nav-link:hover,
 .navigation .nav-link:hover,
-.header-bar-nav .nav-link:hover {
+.header-bar-nav .nav-link:hover,
+.footer-nav .nav-link:hover {
   opacity: 0.88;
 }
 
@@ -874,10 +876,10 @@ body.pft-case-study .header-bar {
 }
 
 .pft-intro {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: clamp(40px, 10vw, 446px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--spacing-gap);
+  align-items: start;
 }
 
 .pft-title {
@@ -893,9 +895,8 @@ body.pft-case-study .header-bar {
 }
 
 .pft-lede {
-  width: min(866px, 100%);
   font-family: var(--font-serif);
-  font-size: 20px;
+  font-size: clamp(16px, 1.4vw, 20px);
   font-weight: 400;
   line-height: 28px;
   letter-spacing: 0.08px;
@@ -1015,7 +1016,7 @@ body.pft-case-study .header-bar {
   }
 
   .pft-intro {
-    flex-direction: column;
+    grid-template-columns: 1fr;
     gap: 24px;
   }
 
@@ -1059,4 +1060,63 @@ body.pft-case-study .header-bar {
 :focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 4px;
+}
+
+/* ==========================================================================
+   Site Footer
+   Full-width wrapper, inner content aligned to .container grid
+   ========================================================================== */
+
+.site-footer {
+  width: 100%;
+  margin-top: clamp(96px, 12vw, 224px);
+}
+
+/* Uses identical padding to .container for perfect grid alignment */
+.footer-inner {
+  width: 100%;
+  padding: 0 var(--spacing-page) var(--spacing-page);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-copyright {
+  font-family: var(--font-sans);
+  font-size: clamp(16px, 1.67vw, 24px);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-primary);
+}
+
+.footer-nav {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+/* Footer nav links reuse .nav-link from the navigation system */
+.footer-nav .nav-link {
+  padding-bottom: 0;
+}
+
+@media (max-width: 600px) {
+  .site-footer {
+    margin-top: 48px;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .footer-copyright {
+    order: 2;
+  }
+
+  .footer-nav {
+    order: 1;
+    flex-wrap: wrap;
+  }
 }
