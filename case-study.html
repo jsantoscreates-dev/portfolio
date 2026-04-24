@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CASE STUDY PROJECT — Jorge Santos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20260414d">
+  <script>
+    // Figma capture: ensure the page is visible + fully revealed at capture time.
+    // This only runs when the #figmacapture hash is present.
+    (function() {
+      try {
+        if (typeof location !== 'undefined' && location.hash && location.hash.indexOf('figmacapture=') !== -1) {
+          document.documentElement.classList.add('fonts-loaded', 'figma-capture');
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <style>
+    /* Capture-only overrides (no visual change in normal browsing) */
+    html.figma-capture body { visibility: visible !important; }
+    html.figma-capture [data-animate] {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  </style>
+  <script>
+    // Wait for specific fonts to load before showing content (prevents FOUT)
+    (function() {
+      var fontsLoaded = false;
+      function showContent() {
+        if (!fontsLoaded) {
+          fontsLoaded = true;
+          document.documentElement.classList.add('fonts-loaded');
+        }
+      }
+      if (document.fonts && document.fonts.load) {
+        Promise.all([
+          document.fonts.load('400 1em "Work Sans"'),
+          document.fonts.load('400 1em "Lora"')
+        ]).then(showContent).catch(showContent);
+      } else {
+        showContent();
+      }
+      setTimeout(showContent, 1000);
+    })();
+  </script>
+</head>
+<body>
+  <!-- Fixed Navigation Bar (appears on scroll) -->
+  <nav class="sticky-nav">
+    <a href="index.html" class="sticky-logo">JORGE SANTOS</a>
+    <div class="sticky-links">
+      <a href="https://drive.google.com/file/d/1BTKduk8bo3N-cz7o9et189hgbtMSdmk6/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="nav-link">RESUME</a>
+      <a href="about.html" class="nav-link">ABOUT</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <header class="header-bar">
+      <a href="index.html" class="header-bar-logo">JORGE SANTOS</a>
+      <nav class="header-bar-nav">
+        <a href="https://drive.google.com/file/d/1BTKduk8bo3N-cz7o9et189hgbtMSdmk6/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="nav-link">RESUME</a>
+        <a href="about.html" class="nav-link">ABOUT</a>
+      </nav>
+    </header>
+
+    <section class="case-study">
+      <div class="project-card-media case-study-hero" data-animate="media">
+        <img
+          class="project-card-video"
+          alt="CASE STUDY PROJECT"
+          loading="eager"
+          decoding="async"
+          src="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%271240%27%20height%3D%27683%27%20viewBox%3D%270%200%201240%20683%27%3E%3Crect%20width%3D%271240%27%20height%3D%27683%27%20fill%3D%27%23e9e6df%27/%3E%3Ctext%20x%3D%2750%25%27%20y%3D%2750%25%27%20text-anchor%3D%27middle%27%20dominant-baseline%3D%27middle%27%20font-family%3D%27Work%20Sans%2C%20Arial%2C%20sans-serif%27%20font-size%3D%2742%27%20letter-spacing%3D%272%27%20fill%3D%27%232A2A2A%27%20fill-opacity%3D%270.55%27%3ECASE%20STUDY%20HERO%3C/text%3E%3C/svg%3E"
+        >
+      </div>
+
+      <div class="about-content case-study-intro">
+        <h1 class="about-title project-card-title" data-animate="title">CASE STUDY PROJECT</h1>
+        <div class="about-info project-card-info" data-animate="copy">
+          <div class="about-text project-card-text">
+            <p>A UX/UI project focused on structure, interface clarity, and a more thoughtful digital experience. Designed as part of an editorial and minimal portfolio system.</p>
+          </div>
+          <a href="#" class="about-link project-card-link" data-animate="cta"><span class="link-label">VISIT CASE STUDY</span><span class="link-arrow" aria-hidden="true">→</span></a>
+        </div>
+      </div>
+
+      <div class="case-study-gallery">
+        <div class="case-study-row case-study-row--two">
+          <figure class="case-study-item" data-animate="media">
+            <div class="project-card-media">
+              <img
+                class="project-card-video"
+                alt="Case study gallery image 1"
+                loading="lazy"
+                decoding="async"
+                src="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%271240%27%20height%3D%27683%27%20viewBox%3D%270%200%201240%20683%27%3E%3Crect%20width%3D%271240%27%20height%3D%27683%27%20fill%3D%27%23e7e4dd%27/%3E%3Ctext%20x%3D%2750%25%27%20y%3D%2750%25%27%20text-anchor%3D%27middle%27%20dominant-baseline%3D%27middle%27%20font-family%3D%27Work%20Sans%2C%20Arial%2C%20sans-serif%27%20font-size%3D%2732%27%20letter-spacing%3D%271.5%27%20fill%3D%27%232A2A2A%27%20fill-opacity%3D%270.45%27%3EIMAGE%2001%3C/text%3E%3C/svg%3E"
+              >
+            </div>
+            <figcaption class="case-study-caption project-card-text">
+              <p>Wireframe direction</p>
+            </figcaption>
+          </figure>
+
+          <figure class="case-study-item" data-animate="media">
+            <div class="project-card-media">
+              <img
+                class="project-card-video"
+                alt="Case study gallery image 2"
+                loading="lazy"
+                decoding="async"
+                src="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%271240%27%20height%3D%27683%27%20viewBox%3D%270%200%201240%20683%27%3E%3Crect%20width%3D%271240%27%20height%3D%27683%27%20fill%3D%27%23e5e2db%27/%3E%3Ctext%20x%3D%2750%25%27%20y%3D%2750%25%27%20text-anchor%3D%27middle%27%20dominant-baseline%3D%27middle%27%20font-family%3D%27Work%20Sans%2C%20Arial%2C%20sans-serif%27%20font-size%3D%2732%27%20letter-spacing%3D%271.5%27%20fill%3D%27%232A2A2A%27%20fill-opacity%3D%270.45%27%3EIMAGE%2002%3C/text%3E%3C/svg%3E"
+              >
+            </div>
+          </figure>
+        </div>
+
+        <div class="case-study-row case-study-row--two">
+          <figure class="case-study-item" data-animate="media">
+            <div class="project-card-media">
+              <img
+                class="project-card-video"
+                alt="Case study gallery image 3"
+                loading="lazy"
+                decoding="async"
+                src="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%271240%27%20height%3D%27683%27%20viewBox%3D%270%200%201240%20683%27%3E%3Crect%20width%3D%271240%27%20height%3D%27683%27%20fill%3D%27%23e8e5de%27/%3E%3Ctext%20x%3D%2750%25%27%20y%3D%2750%25%27%20text-anchor%3D%27middle%27%20dominant-baseline%3D%27middle%27%20font-family%3D%27Work%20Sans%2C%20Arial%2C%20sans-serif%27%20font-size%3D%2732%27%20letter-spacing%3D%271.5%27%20fill%3D%27%232A2A2A%27%20fill-opacity%3D%270.45%27%3EIMAGE%2003%3C/text%3E%3C/svg%3E"
+              >
+            </div>
+            <figcaption class="case-study-caption project-card-text">
+              <p>Interface structure</p>
+              <p>A compact set of screens to test hierarchy, spacing, and reading flow.</p>
+            </figcaption>
+          </figure>
+
+          <figure class="case-study-item" data-animate="media">
+            <div class="project-card-media">
+              <img
+                class="project-card-video"
+                alt="Case study gallery image 4"
+                loading="lazy"
+                decoding="async"
+                src="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%271240%27%20height%3D%27683%27%20viewBox%3D%270%200%201240%20683%27%3E%3Crect%20width%3D%271240%27%20height%3D%27683%27%20fill%3D%27%23e4e1da%27/%3E%3Ctext%20x%3D%2750%25%27%20y%3D%2750%25%27%20text-anchor%3D%27middle%27%20dominant-baseline%3D%27middle%27%20font-family%3D%27Work%20Sans%2C%20Arial%2C%20sans-serif%27%20font-size%3D%2732%27%20letter-spacing%3D%271.5%27%20fill%3D%27%232A2A2A%27%20fill-opacity%3D%270.45%27%3EIMAGE%2004%3C/text%3E%3C/svg%3E"
+              >
+            </div>
+            <figcaption class="case-study-caption project-card-text">
+              <p>Navigation</p>
+            </figcaption>
+          </figure>
+        </div>
+
+        <div class="case-study-row case-study-row--one">
+          <figure class="case-study-item" data-animate="media">
+            <div class="project-card-media case-study-full">
+              <img
+                class="project-card-video"
+                alt="Case study full-width image"
+                loading="lazy"
+                decoding="async"
+                src="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%271240%27%20height%3D%27683%27%20viewBox%3D%270%200%201240%20683%27%3E%3Crect%20width%3D%271240%27%20height%3D%27683%27%20fill%3D%27%23e6e3dc%27/%3E%3Ctext%20x%3D%2750%25%27%20y%3D%2750%25%27%20text-anchor%3D%27middle%27%20dominant-baseline%3D%27middle%27%20font-family%3D%27Work%20Sans%2C%20Arial%2C%20sans-serif%27%20font-size%3D%2732%27%20letter-spacing%3D%271.5%27%20fill%3D%27%232A2A2A%27%20fill-opacity%3D%270.45%27%3EFULL%20WIDTH%3C/text%3E%3C/svg%3E"
+              >
+            </div>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span class="footer-copyright">&copy; 2026 – Jorge Santos</span>
+      <nav class="footer-nav" aria-label="Social links">
+        <a href="https://www.instagram.com/jsantoscreates/" target="_blank" rel="noopener noreferrer" class="nav-link">INSTAGRAM</a>
+        <a href="https://www.linkedin.com/in/jorge-santos-64bb52206/" target="_blank" rel="noopener noreferrer" class="nav-link">LINKEDIN</a>
+        <a href="mailto:jsantoscreates@gmail.com" class="nav-link">EMAIL</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="custom-cursor" aria-hidden="true"></div>
+  <script src="main.js?v=20260414d"></script>
+</body>
+</html>
+

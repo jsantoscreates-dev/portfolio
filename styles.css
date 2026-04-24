@@ -1087,6 +1087,7 @@ body.pft-case-study .header-bar {
   font-weight: 400;
   line-height: 1.5;
   color: var(--color-primary);
+  text-transform: uppercase;
 }
 
 .footer-nav {
@@ -1112,11 +1113,11 @@ body.pft-case-study .header-bar {
   }
 
   .footer-copyright {
-    order: 2;
+    order: 1;
   }
 
   .footer-nav {
-    order: 1;
+    order: 2;
     flex-wrap: wrap;
   }
 }
