@@ -243,6 +243,7 @@ html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scrollbar-gutter: stable;
 }
 
 body {
@@ -264,7 +265,18 @@ a {
 
 .container {
   width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   padding: var(--spacing-page);
+}
+
+/* Full width of the padded main column (header/footer use the same --spacing-page) */
+.container > .about,
+.container > .case-study,
+.container > .projects,
+.container > section.pft {
+  width: 100%;
+  min-width: 0;
 }
 
 /* ==========================================================================
@@ -296,7 +308,7 @@ a {
   font-family: var(--font-sans);
   font-size: clamp(32px, 6.67vw, 96px);
   font-weight: 400;
-  letter-spacing: -1.536px;
+  letter-spacing: -0.018em;
   line-height: 1.2;
 }
 
@@ -305,7 +317,7 @@ a {
   font-family: var(--font-serif);
   font-size: clamp(28px, 5.56vw, 80px);
   font-weight: 400;
-  letter-spacing: -1.12px;
+  letter-spacing: -0.018em;
   line-height: 1.2;
 }
 
@@ -337,9 +349,10 @@ a {
 .header-bar-nav .nav-link,
 .footer-nav .nav-link {
   font-family: var(--font-sans);
-  font-size: clamp(16px, 1.67vw, 24px);
+  font-size: 24px;
   font-weight: 400;
-  line-height: 1.5;
+  line-height: 32px;
+  letter-spacing: -0.005em;
   position: relative;
   display: inline-block;
   text-decoration: none;
@@ -414,9 +427,10 @@ a {
 
 .sticky-logo {
   font-family: var(--font-sans);
-  font-size: clamp(16px, 1.67vw, 24px);
+  font-size: 24px;
   font-weight: 400;
-  line-height: 1.5;
+  line-height: 32px;
+  letter-spacing: -0.005em;
   min-height: 40px;
   display: inline-flex;
   align-items: center;
@@ -465,7 +479,7 @@ a {
   font-size: clamp(24px, 4.17vw, 60px);
   font-weight: 400;
   line-height: 1.2;
-  letter-spacing: -1px;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
   width: 55.6%;
   flex-shrink: 0;
@@ -489,10 +503,10 @@ a {
 
 .project-card-text {
   font-family: var(--font-serif);
-  font-size: clamp(14px, 1.39vw, 20px);
+  font-size: 20px;
   font-weight: 400;
-  line-height: 1.5;
-  letter-spacing: 0.08px;
+  line-height: 32px;
+  letter-spacing: -0.01em;
 }
 
 .project-card-text p {
@@ -505,10 +519,10 @@ a {
 
 .project-card-link {
   font-family: var(--font-sans);
-  font-size: clamp(14px, 1.39vw, 20px);
+  font-size: 24px;
   font-weight: 400;
-  line-height: 28px;
-  letter-spacing: 0.08px;
+  line-height: 32px;
+  letter-spacing: -0.005em;
   text-transform: uppercase;
   text-decoration: none;
   position: relative;
@@ -639,9 +653,10 @@ a {
 
 .header-bar-logo {
   font-family: var(--font-sans);
-  font-size: clamp(16px, 1.67vw, 24px);
+  font-size: 24px;
   font-weight: 400;
-  line-height: 1.33;
+  line-height: 32px;
+  letter-spacing: -0.005em;
   min-height: 40px;
   display: inline-flex;
   align-items: center;
@@ -695,7 +710,7 @@ a {
   font-size: clamp(24px, 4.17vw, 60px);
   font-weight: 400;
   line-height: 1.2;
-  letter-spacing: -0.6px;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
   width: 55.6%;
   flex-shrink: 0;
@@ -711,10 +726,10 @@ a {
 
 .about-text {
   font-family: var(--font-serif);
-  font-size: clamp(14px, 1.39vw, 20px);
+  font-size: 20px;
   font-weight: 400;
-  line-height: 1.4;
-  letter-spacing: 0.08px;
+  line-height: 32px;
+  letter-spacing: -0.01em;
 }
 
 .about-text p {
@@ -727,10 +742,10 @@ a {
 
 .about-link {
   font-family: var(--font-sans);
-  font-size: clamp(14px, 1.39vw, 20px);
+  font-size: 24px;
   font-weight: 400;
-  line-height: 1.4;
-  letter-spacing: 0.08px;
+  line-height: 32px;
+  letter-spacing: -0.005em;
   text-transform: uppercase;
   text-decoration: none;
   background: none;
@@ -838,7 +853,8 @@ body.pft-case-study .header-bar {
 
 .pft-wrap {
   width: 100%;
-  max-width: 1968px;
+  max-width: 100%;
+  min-width: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
@@ -887,7 +903,7 @@ body.pft-case-study .header-bar {
   font-size: clamp(36px, 4.2vw, 60px);
   font-weight: 400;
   line-height: 1.2;
-  letter-spacing: clamp(-0.6px, -0.03vw, -0.3px);
+  letter-spacing: -0.02em;
   text-transform: uppercase;
   color: var(--color-primary);
   margin: 0;
@@ -896,10 +912,10 @@ body.pft-case-study .header-bar {
 
 .pft-lede {
   font-family: var(--font-serif);
-  font-size: clamp(16px, 1.4vw, 20px);
+  font-size: 20px;
   font-weight: 400;
-  line-height: 28px;
-  letter-spacing: 0.08px;
+  line-height: 32px;
+  letter-spacing: -0.01em;
   color: var(--color-primary);
 }
 
@@ -975,7 +991,7 @@ body.pft-case-study .header-bar {
   font-size: clamp(28px, 3vw, 45px);
   font-weight: 400;
   line-height: 1.2;
-  letter-spacing: clamp(-0.45px, -0.02vw, -0.2px);
+  letter-spacing: -0.02em;
   text-transform: uppercase;
   margin: 0;
   color: var(--color-primary);
@@ -983,15 +999,39 @@ body.pft-case-study .header-bar {
 
 .pft-section-body {
   font-family: var(--font-serif);
-  font-size: clamp(16px, 1.4vw, 20px);
+  font-size: 20px;
   font-weight: 400;
-  line-height: 28px;
-  letter-spacing: 0.08px;
+  line-height: 32px;
+  letter-spacing: -0.01em;
   color: var(--color-primary);
 }
 
 .pft-section-body p {
   margin: 0;
+}
+
+.pft-solution-hero {
+  width: 100%;
+}
+
+.pft-solution-hero .pft-hero-card {
+  width: 100%;
+  aspect-ratio: 3936 / 2168;
+  overflow: hidden;
+}
+
+.pft-solution-placeholder {
+  width: 100%;
+  height: 100%;
+  background: #1A1A1A;
+}
+
+.pft-solution-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--spacing-gap);
+  align-items: start;
+  margin-top: 16px;
 }
 
 @media (max-width: 1100px) {
@@ -1069,7 +1109,7 @@ body.pft-case-study .header-bar {
 
 .site-footer {
   width: 100%;
-  margin-top: clamp(96px, 12vw, 224px);
+  margin-top: clamp(136px, calc(12vw + 40px), 264px);
 }
 
 /* Uses identical padding to .container for perfect grid alignment */
@@ -1083,9 +1123,10 @@ body.pft-case-study .header-bar {
 
 .footer-copyright {
   font-family: var(--font-sans);
-  font-size: clamp(16px, 1.67vw, 24px);
+  font-size: 24px;
   font-weight: 400;
-  line-height: 1.5;
+  line-height: 32px;
+  letter-spacing: -0.005em;
   color: var(--color-primary);
   text-transform: uppercase;
 }

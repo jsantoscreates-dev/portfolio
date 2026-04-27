@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260414d">
+  <link rel="stylesheet" href="styles.css?v=20260427k">
   <script>
     // Figma capture: ensure the page is visible + fully revealed at capture time.
     // This only runs when the #figmacapture hash is present.
@@ -73,7 +73,7 @@
     <section class="pft" aria-label="Personal Finance Tracker case study">
       <div class="pft-wrap">
         <section class="pft-hero-block">
-          <div class="pft-hero-outer">
+          <div class="pft-hero-outer" data-animate="media">
             <div class="pft-hero">
               <div class="pft-hero-card">
                 <video
@@ -91,12 +91,12 @@
           </div>
 
           <div class="pft-intro">
-            <h1 class="pft-title">
+            <h1 class="pft-title" data-animate="title">
               <span>PERSONAL </span><br>
               <span>FINANCE TRACKER</span>
             </h1>
 
-            <div class="pft-lede">
+            <div class="pft-lede" data-animate="copy">
               <p>
                 What if you could get monthly expense report in just one click ?<br><br>
                 Replaced manual Notion to Excel copying with:
@@ -114,7 +114,7 @@
 
         <section class="pft-context">
           <div class="pft-context-grid">
-            <div class="pft-figure pft-figure--img pft-figure--img-cover">
+            <div class="pft-figure pft-figure--img pft-figure--img-cover" data-animate="media">
               <img
                 alt="Context workflow overview"
                 loading="lazy"
@@ -124,7 +124,7 @@
             </div>
 
             <div class="pft-context-right">
-              <div class="pft-figure pft-figure--img pft-figure--img-cover">
+              <div class="pft-figure pft-figure--img pft-figure--img-cover" data-animate="media">
                 <img
                   alt="Context workflow details"
                   loading="lazy"
@@ -134,8 +134,8 @@
               </div>
 
               <div class="pft-section">
-                <h2 class="pft-section-title">CONTEXT</h2>
-                <div class="pft-section-body">
+                <h2 class="pft-section-title" data-animate="title">CONTEXT</h2>
+                <div class="pft-section-body" data-animate="copy">
                   <p>I was tracking my spending daily in Notion and analyzing it monthly in Excel.</p>
                   <p>Every month I had to take time aside to calculate and extract my spending per category from Notion to an Excel file.<br><br></p>
                   <p>The old workflow:</p>
@@ -152,7 +152,7 @@
         <section class="pft-problem">
           <div class="pft-problem-grid">
             <div class="pft-problem-left">
-              <div class="pft-figure pft-figure--img pft-figure--img-contain">
+              <div class="pft-figure pft-figure--img pft-figure--img-contain" data-animate="media">
                 <img
                   alt="Expense tracker screen"
                   loading="lazy"
@@ -162,8 +162,8 @@
               </div>
 
               <div class="pft-section">
-                <h2 class="pft-section-title">PROBLEM</h2>
-                <div class="pft-section-body">
+                <h2 class="pft-section-title" data-animate="title">PROBLEM</h2>
+                <div class="pft-section-body" data-animate="copy">
                   <p>The workflow was fragmented: Notion for logging, Excel for analysis.</p>
                   <p><br>Every month, I had to copy everything by hand just to understand spending by category.</p>
                   <p>This meant hours lost, no real-time visibility, and no easy way to spot spending habits.</p>
@@ -173,7 +173,7 @@
               </div>
             </div>
 
-            <div class="pft-figure pft-figure--img pft-figure--img-cover">
+            <div class="pft-figure pft-figure--img pft-figure--img-cover" data-animate="media">
               <img
                 alt="Research notes and planning board"
                 loading="lazy"
@@ -185,32 +185,30 @@
         </section>
 
         <section class="pft-solution">
-          <div class="pft-solution-grid">
-            <div class="pft-figure pft-figure--img pft-figure--img-cover pft-figure--dark">
-              <img
-                alt="Solution overview"
-                loading="lazy"
-                decoding="async"
-                src="images/projects/personal-finance-tracker/Images/Solution1.png"
+          <div class="pft-solution-hero" data-animate="media">
+            <div class="pft-hero-card">
+              <video
+                class="pft-hero-image"
+                muted
+                loop
+                playsinline
+                autoplay
+                preload="auto"
               >
+                <source src="videos/Solution.mp4" type="video/mp4">
+              </video>
             </div>
+          </div>
+
+          <div class="pft-solution-grid">
+            <div></div>
 
             <div class="pft-solution-right">
-              <div class="pft-figure pft-figure--img pft-figure--img-cover pft-figure--dark">
-                <img
-                  alt="Solution details"
-                  loading="lazy"
-                  decoding="async"
-                  src="images/projects/personal-finance-tracker/Images/Solution2.png"
-                >
-              </div>
-
               <div class="pft-section">
-                <h2 class="pft-section-title">SOLUTION</h2>
-                <div class="pft-section-body">
+                <h2 class="pft-section-title" data-animate="title">SOLUTION</h2>
+                <div class="pft-section-body" data-animate="copy">
                   <p>I designed a simple expense tracker that replaces the manual Notion-to-Excel workflow with a faster, more connected experience.</p>
                   <p>It allows quick expense logging, live spending category insights, monthly spending history, and one-click Excel export of the monthly spends — giving me a clear view of spending without the monthly copy-paste work.</p>
-                  <p></p>
                 </div>
               </div>
             </div>
