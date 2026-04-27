@@ -306,19 +306,19 @@ a {
 .name {
   display: inline;
   font-family: var(--font-sans);
-  font-size: clamp(32px, 6.67vw, 96px);
+  font-size: clamp(28px, 5vw, 72px);
   font-weight: 400;
-  letter-spacing: -0.018em;
-  line-height: 1.2;
+  letter-spacing: -0.02em;
+  line-height: 1.22;
 }
 
 .description {
   display: inline;
   font-family: var(--font-serif);
-  font-size: clamp(28px, 5.56vw, 80px);
+  font-size: clamp(24px, 4.17vw, 60px);
   font-weight: 400;
-  letter-spacing: -0.018em;
-  line-height: 1.2;
+  letter-spacing: -0.02em;
+  line-height: 1.22;
 }
 
 /* ==========================================================================
