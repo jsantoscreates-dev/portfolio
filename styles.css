@@ -428,6 +428,19 @@ a {
   min-width: 0;
 }
 
+/* Mobile + tablet (<1024px): media full-bleed to viewport edges; gutters use --spacing-page-x (24px / 48px) */
+@media (max-width: 1023px) {
+  .container .project-card-media,
+  .container .about-image-wrapper,
+  body.pft-case-study .container .pft-hero-media,
+  body.pft-case-study .container .pft-duo-cell {
+    margin-left: calc(-1 * var(--spacing-page-x));
+    margin-right: calc(-1 * var(--spacing-page-x));
+    width: calc(100% + 2 * var(--spacing-page-x));
+    max-width: none;
+  }
+}
+
 /* ==========================================================================
    Header
    ========================================================================== */
@@ -463,11 +476,16 @@ a {
 
 .container--home .hero-text h1 {
   font-family: var(--font-serif);
-  font-size: 48px;
+  /* vw + rem scales down on narrow phones so the line fits the padded column without horizontal scroll */
+  font-size: clamp(21px, 2.65vw + 0.8125rem, 48px);
   font-weight: 400;
   letter-spacing: -0.02em;
-  line-height: 1.15;
+  line-height: 1.17;
   color: var(--color-primary);
+  max-width: 100%;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  -webkit-hyphens: auto;
 }
 
 .container--home .name,
@@ -487,6 +505,10 @@ a {
 
 /* Mobile: primary nav above hero, right-aligned (Resume | About stays inline) */
 @media (max-width: 767px) {
+  .container--home .header {
+    min-width: 0;
+  }
+
   .container--home .navigation {
     order: -1;
     align-self: flex-end;
@@ -495,6 +517,7 @@ a {
 
   .container--home .hero-text {
     order: 1;
+    width: 100%;
   }
 }
 
