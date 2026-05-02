@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260427i">
+  <link rel="stylesheet" href="styles.css?v=20260430o">
   <script>
     // Figma capture: ensure the page is visible + fully revealed at capture time.
     // This only runs when the #figmacapture hash is present.
@@ -62,100 +62,82 @@
 <body>
   <!-- Fixed Navigation Bar (appears on scroll) -->
   <nav class="sticky-nav">
-    <a href="index.html" class="sticky-logo">JORGE SANTOS</a>
+    <a href="index.html" class="sticky-logo">Jorge Santos</a>
     <div class="sticky-links">
-      <a href="https://drive.google.com/file/d/1BTKduk8bo3N-cz7o9et189hgbtMSdmk6/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="nav-link">RESUME</a>
-      <a href="about.html" class="nav-link">ABOUT</a>
+      <a href="https://drive.google.com/file/d/1LZN-jjJxgZFZaiveGcp8Fr3doQriB6R3/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="nav-link">Resume</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="mailto:jsantoscreates@gmail.com" class="nav-link">Contact</a>
     </div>
   </nav>
 
-  <main class="container">
-    <header class="header" data-animate="hero">
-      <div class="hero-text" data-animate="hero-copy">
-        <h1>
-          <span class="name">JORGE SANTOS</span>
-          <span class="description">is a multidisciplinary portuguese designer driven by ideas, combining<br>creativity, insight and solid execution.</span>
-        </h1>
+  <main class="container container--home">
+    <header class="header" data-entrance="header">
+      <div class="hero-text" data-animate="fade">
+        <h1>Jorge Santos is a multidisciplinary portuguese designer driven by ideas combining creativity, insight and solid execution.</h1>
       </div>
-      <nav class="navigation" data-animate="hero-nav">
-        <a href="https://drive.google.com/file/d/1BTKduk8bo3N-cz7o9et189hgbtMSdmk6/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="nav-link">RESUME</a>
-        <a href="about.html" class="nav-link">ABOUT</a>
-      </nav>
     </header>
 
     <section class="projects">
-      <article class="project-card">
-        <div class="project-card-media" data-animate="media">
+      <article class="project-card" data-entrance="project">
+        <a href="personal-finance-tracker.html" class="project-card-media" data-animate="image" data-cursor-text="View case study" aria-label="Personal Finance Tracker — open case study">
           <video class="project-card-video" muted loop playsinline preload="auto">
             <source src="videos/Personal_Finance_Tracker.mp4" type="video/mp4">
           </video>
-        </div>
+        </a>
         <div class="project-card-content">
-          <h2 class="project-card-title" data-animate="title">PERSONAL <br>FINANCE TRACKER</h2>
-          <div class="project-card-info" data-animate="copy">
+          <h2 class="project-card-title" data-animate="fade">Personal Finance Tracker</h2>
+          <div class="project-card-info" data-animate="fade">
             <div class="project-card-text">
-              <p>What if tracking expenses was actually fast?</p>
-              <p>Built to replace manual copying between Notion notes and Excel every month.</p>
-              <p>Quick logging, category breakdowns, monthly history, one-click Excel export.</p>
-              <p>No more wasted hours on spreadsheets.</p>
+              <p>Track expenses quickly without manual spreadsheets or wasted time</p>
             </div>
-            <a href="personal-finance-tracker.html" class="project-card-link" data-animate="cta"><span class="link-label">VISIT CASE STUDY</span><span class="link-arrow" aria-hidden="true">→</span></a>
           </div>
         </div>
       </article>
 
       <article class="project-card">
-        <div class="project-card-media" data-animate="media">
+        <a href="https://mouse-relink-18762291.figma.site/" target="_blank" rel="noopener noreferrer" class="project-card-media" data-animate="image" data-cursor-text="Visit project" aria-label="Release Figma Makeathon — open project">
           <video class="project-card-video" muted loop playsinline preload="auto">
             <source src="videos/Release_final.mp4" type="video/mp4">
           </video>
-        </div>
+        </a>
         <div class="project-card-content">
-          <h2 class="project-card-title project-card-title--stacked" data-animate="title"><span>RELEASE</span><br><span class="project-card-title-sub">FIGMA MAKEATHON</span></h2>
-          <div class="project-card-info" data-animate="copy">
+          <h2 class="project-card-title" data-animate="fade">Release Figma Makeathon</h2>
+          <div class="project-card-info" data-animate="fade">
             <div class="project-card-text">
-              <p>What if you could destroy the thoughts that weigh you down?</p>
-              <p>Release is a therapeutic web experience where you write what's heavy, watch it disintegrate, and feel a bit of lightness.</p>
-              <p>Because sometimes, to move forward, you need to see it go.</p>
+              <p>A digital space to write and release emotional weight</p>
             </div>
-            <a href="https://mouse-relink-18762291.figma.site/" target="_blank" rel="noopener noreferrer" class="project-card-link" data-animate="cta"><span class="link-label">VISIT RELEASE</span><span class="link-arrow" aria-hidden="true">→</span></a>
           </div>
         </div>
       </article>
 
       <article class="project-card">
-        <div class="project-card-media" data-animate="media">
+        <a href="https://posteremojiapp.vercel.app/" target="_blank" rel="noopener noreferrer" class="project-card-media" data-animate="image" data-cursor-text="Visit project" aria-label="Poster Emoji App — open project">
           <video class="project-card-video" muted loop playsinline preload="metadata" poster="">
             <source src="videos/Poster_emoji_final.mp4" type="video/mp4">
           </video>
-        </div>
+        </a>
         <div class="project-card-content">
-          <h2 class="project-card-title" data-animate="title">POSTER EMOJI APP</h2>
-          <div class="project-card-info" data-animate="copy">
+          <h2 class="project-card-title" data-animate="fade">Poster Emoji App</h2>
+          <div class="project-card-info" data-animate="fade">
             <div class="project-card-text">
-              <p>If emojis were pixels, what would you draw?</p>
-              <p>A simple tool where you pick your emojis, adjust size and density, and create unexpected posters.</p>
+              <p>A simple app for creating posters with emoji compositions</p>
             </div>
-            <a href="https://posteremojiapp.vercel.app/" target="_blank" rel="noopener noreferrer" class="project-card-link" data-animate="cta"><span class="link-label">VISIT Poster emoji app</span><span class="link-arrow" aria-hidden="true">→</span></a>
           </div>
         </div>
       </article>
 
       <article class="project-card">
-        <div class="project-card-media" data-animate="media">
+        <a href="https://printed-years.vercel.app/" target="_blank" rel="noopener noreferrer" class="project-card-media" data-animate="image" data-cursor-text="Visit project" aria-label="Printed Years — open project">
           <video class="project-card-video" muted loop playsinline preload="metadata" poster="">
             <source src="videos/printed_years_final.mp4" type="video/mp4">
           </video>
-        </div>
+        </a>
         <div class="project-card-content">
-          <h2 class="project-card-title" data-animate="title">PRINTED YEARS</h2>
-          <div class="project-card-info" data-animate="copy">
+          <h2 class="project-card-title" data-animate="fade">Printed Years</h2>
+          <div class="project-card-info" data-animate="fade">
             <div class="project-card-text">
-              <p>If posters could live outside the feed, where would you put them?</p>
-              <p>Since 2019, I've been using an Instagram page to experiment, make mistakes, and post consistently. What started as visual exercises ended up on the walls of strangers.</p>
-              <p>This gallery is my way of giving these posters a quieter space to live, outside the noise of the feed.</p>
+              <p>A gallery giving digital posters a quieter space to exist</p>
             </div>
-            <a href="https://printed-years.vercel.app/" target="_blank" rel="noopener noreferrer" class="project-card-link" data-animate="cta"><span class="link-label">VISIT PRINTED YEARS</span><span class="link-arrow" aria-hidden="true">→</span></a>
           </div>
         </div>
       </article>
@@ -163,18 +145,7 @@
 
   </main>
 
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <span class="footer-copyright">&copy; 2026 – Jorge Santos</span>
-      <nav class="footer-nav" aria-label="Social links">
-        <a href="https://www.instagram.com/jsantoscreates/" target="_blank" rel="noopener noreferrer" class="nav-link">INSTAGRAM</a>
-        <a href="https://www.linkedin.com/in/jorge-santos-64bb52206/" target="_blank" rel="noopener noreferrer" class="nav-link">LINKEDIN</a>
-        <a href="mailto:jsantoscreates@gmail.com" class="nav-link">EMAIL</a>
-      </nav>
-    </div>
-  </footer>
-
-  <div class="custom-cursor" aria-hidden="true"></div>
+  <div class="custom-cursor" aria-hidden="true"><span class="cursor-text"></span></div>
   <script src="main.js?v=20260414d"></script>
 </body>
 </html>

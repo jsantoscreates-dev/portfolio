@@ -32,6 +32,8 @@
     var cursor = document.querySelector('.custom-cursor');
     if (!cursor) return;
 
+    var cursorText = cursor.querySelector('.cursor-text');
+
     document.documentElement.classList.add('has-custom-cursor');
 
     var mouseX = window.innerWidth / 2;
@@ -56,7 +58,8 @@
 
     window.addEventListener('mouseleave', function() {
       cursor.classList.add('is-hidden');
-      cursor.classList.remove('is-visible', 'is-link', 'is-media');
+      cursor.classList.remove('is-visible', 'is-link', 'is-media', 'is-project');
+      if (cursorText) cursorText.textContent = '';
     });
 
     window.addEventListener('mouseenter', function() {
@@ -64,22 +67,43 @@
       cursor.classList.remove('is-hidden');
     });
 
-    var linkTargets = document.querySelectorAll('a, button, [role="button"]');
+    // Project links with custom cursor text (pill state) — handled first, highest priority
+    var projectTargets = document.querySelectorAll('[data-cursor-text]');
+    projectTargets.forEach(function(el) {
+      el.addEventListener('mouseenter', function() {
+        var text = el.getAttribute('data-cursor-text');
+        if (cursorText) cursorText.textContent = text;
+        cursor.classList.add('is-project');
+        cursor.classList.remove('is-link', 'is-media');
+      });
+      el.addEventListener('mouseleave', function() {
+        cursor.classList.remove('is-project');
+        if (cursorText) cursorText.textContent = '';
+      });
+    });
+
+    // Regular links (exclude project links with cursor text)
+    var linkTargets = document.querySelectorAll('a:not([data-cursor-text]), button, [role="button"]');
     linkTargets.forEach(function(el) {
       el.addEventListener('mouseenter', function() {
-        cursor.classList.add('is-link');
-        cursor.classList.remove('is-media');
+        if (!cursor.classList.contains('is-project')) {
+          cursor.classList.add('is-link');
+          cursor.classList.remove('is-media');
+        }
       });
       el.addEventListener('mouseleave', function() {
         cursor.classList.remove('is-link');
       });
     });
 
-    var mediaTargets = document.querySelectorAll('.project-card, .project-card-media, img, video');
+    // Media targets (exclude project card media which have cursor text)
+    var mediaTargets = document.querySelectorAll('.project-card:not(:has([data-cursor-text])), img, video');
     mediaTargets.forEach(function(el) {
       el.addEventListener('mouseenter', function() {
-        cursor.classList.add('is-media');
-        cursor.classList.remove('is-link');
+        if (!cursor.classList.contains('is-project')) {
+          cursor.classList.add('is-media');
+          cursor.classList.remove('is-link');
+        }
       });
       el.addEventListener('mouseleave', function() {
         cursor.classList.remove('is-media');
@@ -94,22 +118,8 @@
   // ==========================================================================
 
   var stickyNav = document.querySelector('.sticky-nav');
-  var heroText = document.querySelector('.hero-text');
-  var headerBar = document.querySelector('.header-bar');
-  var scrollTarget = heroText || headerBar;
-
-  if (scrollTarget && stickyNav && typeof IntersectionObserver === 'function') {
-    var navObserver = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          stickyNav.classList.remove('visible');
-        } else {
-          stickyNav.classList.add('visible');
-        }
-      });
-    }, { threshold: 0 });
-
-    navObserver.observe(scrollTarget);
+  if (stickyNav) {
+    stickyNav.classList.add('visible');
   }
 
   // ==========================================================================
@@ -159,19 +169,28 @@
   }
 
   // ==========================================================================
-  // Scroll Reveal — sequential, one element at a time
+  // Animation System — fade (text/UI) and image (scale+fade)
   // ==========================================================================
 
-  // New motion architecture — semantic roles via data-animate.
-  // - No queue-based "one at a time" reveals.
-  // - Different behaviors per role: hero / media / title / copy / cta.
-  // - IO-driven, low state, no scroll thrash.
+  /*
+    Page-load entrance sequences:
+    - Home:       header (0ms) → hero (150ms) → first project (300ms)
+    - About:      header (0ms) → image (150ms) → content (300ms)
+    - Case Study: header (0ms) → title (150ms) → hero image (300ms)
+
+    Scroll reveal: 20% threshold, animate once
+  */
 
   var Animated = (function() {
     var REVEAL_CLASS = 'is-revealed';
+    var SAFETY_REVEAL_MS = 1500;
 
     function qsAll(selector, root) {
       return Array.prototype.slice.call((root || document).querySelectorAll(selector));
+    }
+
+    function qs(selector, root) {
+      return (root || document).querySelector(selector);
     }
 
     function reveal(el) {
@@ -179,8 +198,21 @@
       el.classList.add(REVEAL_CLASS);
     }
 
-    function revealAll(selector) {
-      qsAll(selector).forEach(reveal);
+    function revealAll(selector, root) {
+      qsAll(selector, root).forEach(reveal);
+    }
+
+    // Track entrance elements to exclude from scroll reveal
+    var entranceElements = [];
+
+    function markEntranceElement(el) {
+      if (el && entranceElements.indexOf(el) === -1) {
+        entranceElements.push(el);
+      }
+    }
+
+    function isEntranceElement(el) {
+      return entranceElements.indexOf(el) !== -1;
     }
 
     function initReducedMotion() {
@@ -188,46 +220,139 @@
       return true;
     }
 
-    function initHero() {
-      var hero = document.querySelector('[data-animate=\"hero\"]');
-      if (!hero) return;
+    // --------------------------------------------------------------------------
+    // Page-load entrance animations
+    // --------------------------------------------------------------------------
 
-      var heroCopy = hero.querySelector('[data-animate=\"hero-copy\"]');
-      var heroNav = hero.querySelector('[data-animate=\"hero-nav\"]');
-      var SAFETY_REVEAL_MS = 1200;
+    function initHomeEntrance() {
+      var header = qs('[data-entrance="header"]');
+      var firstProject = qs('[data-entrance="project"]');
+      if (!header) return false;
 
-      // Keep it deliberate but not "landing page".
-      // Use small stagger to avoid template feel.
-      // If fonts-loaded is present, we start immediately; otherwise a short delay.
+      // Collect entrance elements
+      var headerEls = qsAll('[data-animate]', header);
+      var projectEls = firstProject ? qsAll('[data-animate]', firstProject) : [];
+
+      headerEls.forEach(markEntranceElement);
+      projectEls.forEach(markEntranceElement);
+
       var start = function() {
-        // Reveal the hero container first so child opacity isn't compounded.
-        reveal(hero);
-        if (heroCopy) reveal(heroCopy);
+        // 1. Header elements at 0ms (nav)
+        var nav = qs('.navigation[data-animate]', header);
+        if (nav) reveal(nav);
+
+        // 2. Hero text at 0ms (single fade, starts immediately)
+        var heroText = qs('.hero-text[data-animate]', header);
+        if (heroText) reveal(heroText);
+
+        // 3. First project at 300ms
         setTimeout(function() {
-          if (heroNav) reveal(heroNav);
-        }, 140);
+          projectEls.forEach(reveal);
+        }, 300);
       };
 
-      // Safety: never allow the hero to remain hidden (extensions / edge cases).
-      // Runs regardless of font-loading path.
+      // Safety fallback
       setTimeout(function() {
-        if (hero && !hero.classList.contains(REVEAL_CLASS)) reveal(hero);
-        if (heroCopy && !heroCopy.classList.contains(REVEAL_CLASS)) reveal(heroCopy);
-        if (heroNav && !heroNav.classList.contains(REVEAL_CLASS)) reveal(heroNav);
+        headerEls.forEach(function(el) {
+          if (!el.classList.contains(REVEAL_CLASS)) reveal(el);
+        });
+        projectEls.forEach(function(el) {
+          if (!el.classList.contains(REVEAL_CLASS)) reveal(el);
+        });
       }, SAFETY_REVEAL_MS);
 
+      waitForFonts(start);
+      return true;
+    }
+
+    function initAboutEntrance() {
+      var about = qs('[data-entrance="about"]');
+      if (!about) return false;
+
+      // Collect entrance elements
+      var headerBar = qs('.header-bar[data-animate]', about);
+      var image = qs('.about-image-wrapper[data-animate]', about);
+      var content = qs('.about-content[data-animate]', about);
+
+      [headerBar, image, content].forEach(markEntranceElement);
+
+      var start = function() {
+        // 1. Header at 0ms
+        if (headerBar) reveal(headerBar);
+
+        // 2. Image at 150ms
+        setTimeout(function() {
+          if (image) reveal(image);
+        }, 150);
+
+        // 3. Content at 300ms
+        setTimeout(function() {
+          if (content) reveal(content);
+        }, 300);
+      };
+
+      // Safety fallback
+      setTimeout(function() {
+        [headerBar, image, content].forEach(function(el) {
+          if (el && !el.classList.contains(REVEAL_CLASS)) reveal(el);
+        });
+      }, SAFETY_REVEAL_MS);
+
+      waitForFonts(start);
+      return true;
+    }
+
+    function initCaseStudyEntrance() {
+      var caseStudy = qs('[data-entrance="casestudy"]');
+      if (!caseStudy) return false;
+
+      // Collect entrance elements (first zone only)
+      var leadZone = qs('.pft-zone--lead', caseStudy);
+      if (!leadZone) return false;
+
+      var headerBar = qs('.header-bar[data-animate]', leadZone);
+      var titleStack = qs('.pft-title-stack[data-animate]', leadZone);
+      var heroMedia = qs('.pft-hero-media[data-animate]', leadZone);
+
+      [headerBar, titleStack, heroMedia].forEach(markEntranceElement);
+
+      var start = function() {
+        // 1. Header at 0ms
+        if (headerBar) reveal(headerBar);
+
+        // 2. Title at 150ms
+        setTimeout(function() {
+          if (titleStack) reveal(titleStack);
+        }, 150);
+
+        // 3. Hero image at 300ms
+        setTimeout(function() {
+          if (heroMedia) reveal(heroMedia);
+        }, 300);
+      };
+
+      // Safety fallback
+      setTimeout(function() {
+        [headerBar, titleStack, heroMedia].forEach(function(el) {
+          if (el && !el.classList.contains(REVEAL_CLASS)) reveal(el);
+        });
+      }, SAFETY_REVEAL_MS);
+
+      waitForFonts(start);
+      return true;
+    }
+
+    function waitForFonts(callback) {
       if (document.documentElement.classList.contains('fonts-loaded')) {
-        // Start as soon as possible; avoid waiting on IO or other async hooks.
-        requestAnimationFrame(start);
+        requestAnimationFrame(callback);
         return;
       }
 
-      // Fallback: don't block forever if fonts hang.
       var started = false;
       var tryStart = function() {
         if (started) return;
         started = true;
-        start();
+        callback();
       };
 
       var mo = new MutationObserver(function() {
@@ -237,17 +362,24 @@
         }
       });
       mo.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-      setTimeout(tryStart, 700);
+      setTimeout(tryStart, 800);
     }
 
-    function observeGroup(selector, options) {
-      var els = qsAll(selector);
-      if (els.length === 0) return;
+    // --------------------------------------------------------------------------
+    // Scroll reveal (20% threshold, animate once)
+    // --------------------------------------------------------------------------
 
+    function initScrollReveal() {
       if (typeof IntersectionObserver !== 'function') {
-        els.forEach(reveal);
+        revealAll('[data-animate]');
         return;
       }
+
+      var scrollElements = qsAll('[data-animate]').filter(function(el) {
+        return !isEntranceElement(el);
+      });
+
+      if (scrollElements.length === 0) return;
 
       var obs = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
@@ -255,45 +387,30 @@
           reveal(entry.target);
           obs.unobserve(entry.target);
         });
-      }, options);
-
-      els.forEach(function(el) { obs.observe(el); });
-    }
-
-    function initScrollMotion() {
-      // Media: a touch more presence, reveal earlier.
-      observeGroup('[data-animate=\"media\"]', {
+      }, {
         root: null,
-        threshold: 0.18,
-        rootMargin: '0px 0px -10% 0px'
+        threshold: 0.2,
+        rootMargin: '0px'
       });
 
-      // Titles: crisp + quick.
-      observeGroup('[data-animate=\"title\"]', {
-        root: null,
-        threshold: 0.25,
-        rootMargin: '0px 0px -12% 0px'
-      });
-
-      // Copy blocks: softer, slightly later.
-      observeGroup('[data-animate=\"copy\"]', {
-        root: null,
-        threshold: 0.3,
-        rootMargin: '0px 0px -8% 0px'
-      });
-
-      // CTAs: minimal motion; mostly hover does the work.
-      observeGroup('[data-animate=\"cta\"]', {
-        root: null,
-        threshold: 0.55,
-        rootMargin: '0px 0px -6% 0px'
+      scrollElements.forEach(function(el) {
+        obs.observe(el);
       });
     }
+
+    // --------------------------------------------------------------------------
+    // Init
+    // --------------------------------------------------------------------------
 
     function init() {
       if (prefersReducedMotion) return initReducedMotion();
-      initHero();
-      initScrollMotion();
+
+      // Detect page type and run appropriate entrance
+      initHomeEntrance() || initAboutEntrance() || initCaseStudyEntrance();
+
+      // Scroll reveal for remaining elements
+      initScrollReveal();
+
       return true;
     }
 

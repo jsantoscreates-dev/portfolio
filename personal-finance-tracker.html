@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PERSONAL FINANCE TRACKER — Jorge Santos</title>
+  <title>Personal Finance Tracker — Jorge Santos</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260427k">
+  <link rel="stylesheet" href="styles.css?v=20260430o">
   <script>
     // Figma capture: ensure the page is visible + fully revealed at capture time.
     // This only runs when the #figmacapture hash is present.
@@ -21,7 +21,6 @@
   </script>
   <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
   <style>
-    /* Capture-only overrides (no visual change in normal browsing) */
     html.figma-capture body { visibility: visible !important; }
     html.figma-capture [data-animate] {
       opacity: 1 !important;
@@ -30,7 +29,6 @@
     }
   </style>
   <script>
-    // Wait for specific fonts to load before showing content (prevents FOUT)
     (function() {
       var fontsLoaded = false;
       function showContent() {
@@ -52,29 +50,27 @@
   </script>
 </head>
 <body class="pft-case-study">
-  <!-- Fixed Navigation Bar (appears on scroll) -->
   <nav class="sticky-nav">
-    <a href="index.html" class="sticky-logo">JORGE SANTOS</a>
+    <a href="index.html" class="sticky-logo">Jorge Santos</a>
     <div class="sticky-links">
-      <a href="https://drive.google.com/file/d/1BTKduk8bo3N-cz7o9et189hgbtMSdmk6/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="nav-link">RESUME</a>
-      <a href="about.html" class="nav-link">ABOUT</a>
+      <a href="https://drive.google.com/file/d/1LZN-jjJxgZFZaiveGcp8Fr3doQriB6R3/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="nav-link">Resume</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="mailto:jsantoscreates@gmail.com" class="nav-link">Contact</a>
     </div>
   </nav>
 
-  <main class="container">
-    <header class="header-bar">
-      <a href="index.html" class="header-bar-logo">JORGE SANTOS</a>
-      <nav class="header-bar-nav">
-        <a href="https://drive.google.com/file/d/1BTKduk8bo3N-cz7o9et189hgbtMSdmk6/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="nav-link">RESUME</a>
-        <a href="about.html" class="nav-link">ABOUT</a>
-      </nav>
-    </header>
-
-    <section class="pft" aria-label="Personal Finance Tracker case study">
+  <main class="container container--pft">
+    <section class="pft" aria-label="Personal Finance Tracker case study" data-entrance="casestudy">
       <div class="pft-wrap">
-        <section class="pft-hero-block">
-          <div class="pft-hero-outer" data-animate="media">
-            <div class="pft-hero">
+        <div class="pft-zone pft-zone--lead">
+          <div class="pft-hero-bundle">
+            <div class="pft-head-bundle">
+              <div class="pft-title-stack" data-animate="fade">
+                <p class="pft-kicker">Personal Finance Tracker</p>
+                <h1 class="pft-display-title">Track expenses quickly without manual spreadsheets or wasted time</h1>
+              </div>
+            </div>
+            <div class="pft-hero-media" data-animate="image">
               <div class="pft-hero-card">
                 <video
                   class="pft-hero-image"
@@ -90,31 +86,18 @@
             </div>
           </div>
 
-          <div class="pft-intro">
-            <h1 class="pft-title" data-animate="title">
-              <span>PERSONAL </span><br>
-              <span>FINANCE TRACKER</span>
-            </h1>
-
-            <div class="pft-lede" data-animate="copy">
-              <p>
-                What if you could get monthly expense report in just one click ?<br><br>
-                Replaced manual Notion to Excel copying with:
-              </p>
-              <p>
-                <br>
-                - 3-tap expense logging<br>
-                - Live category dashboard<br>
-                -Monthly history + search<br>
-                - One-click Excel export
-              </p>
+          <div class="pft-split pft-split--intro" data-animate="fade">
+            <h2 class="pft-split-label">Intro</h2>
+            <div class="pft-split-body">
+              <p>What if you could get monthly expense reports in just one click?</p>
+              <p>I replaced the manual Notion-to-Excel workflow with a single tool. Three-tap expense logging. A live category dashboard. Monthly history with search. One-click Excel export.</p>
             </div>
           </div>
-        </section>
+        </div>
 
-        <section class="pft-context">
-          <div class="pft-context-grid">
-            <div class="pft-figure pft-figure--img pft-figure--img-cover" data-animate="media">
+        <div class="pft-zone pft-zone--context">
+          <div class="pft-duo">
+            <div class="pft-duo-cell" data-animate="image">
               <img
                 alt="Context workflow overview"
                 loading="lazy"
@@ -122,58 +105,35 @@
                 src="images/projects/personal-finance-tracker/Images/Context1.png"
               >
             </div>
-
-            <div class="pft-context-right">
-              <div class="pft-figure pft-figure--img pft-figure--img-cover" data-animate="media">
-                <img
-                  alt="Context workflow details"
-                  loading="lazy"
-                  decoding="async"
-                  src="images/projects/personal-finance-tracker/Images/Context2.png"
-                >
-              </div>
-
-              <div class="pft-section">
-                <h2 class="pft-section-title" data-animate="title">CONTEXT</h2>
-                <div class="pft-section-body" data-animate="copy">
-                  <p>I was tracking my spending daily in Notion and analyzing it monthly in Excel.</p>
-                  <p>Every month I had to take time aside to calculate and extract my spending per category from Notion to an Excel file.<br><br></p>
-                  <p>The old workflow:</p>
-                  <p>- Notion → Daily expense logging</p>
-                  <p>- Excel → Monthly analysis</p>
-                  <p>- Manual filtering and copy/paste per spending category → Every single month</p>
-                  <p>- Zero real-time visibility → No spending habit insights</p>
-                </div>
-              </div>
+            <div class="pft-duo-cell" data-animate="image">
+              <img
+                alt="Context workflow details"
+                loading="lazy"
+                decoding="async"
+                src="images/projects/personal-finance-tracker/Images/Context2.png"
+              >
             </div>
           </div>
-        </section>
-
-        <section class="pft-problem">
-          <div class="pft-problem-grid">
-            <div class="pft-problem-left">
-              <div class="pft-figure pft-figure--img pft-figure--img-contain" data-animate="media">
-                <img
-                  alt="Expense tracker screen"
-                  loading="lazy"
-                  decoding="async"
-                  src="images/projects/personal-finance-tracker/Images/Problem1.png"
-                >
-              </div>
-
-              <div class="pft-section">
-                <h2 class="pft-section-title" data-animate="title">PROBLEM</h2>
-                <div class="pft-section-body" data-animate="copy">
-                  <p>The workflow was fragmented: Notion for logging, Excel for analysis.</p>
-                  <p><br>Every month, I had to copy everything by hand just to understand spending by category.</p>
-                  <p>This meant hours lost, no real-time visibility, and no easy way to spot spending habits.</p>
-                  <p>A better solution needed to combine fast logging, live category visibility, quick export, and easy monthly history.</p>
-                  <p></p>
-                </div>
-              </div>
+          <div class="pft-split pft-split--pair" data-animate="fade">
+            <h2 class="pft-split-label">Context</h2>
+            <div class="pft-split-body">
+              <p>I was tracking my spending daily in Notion and analyzing it monthly in Excel. Every month, I had to take time aside to calculate and extract my spending per category, copying it from Notion into an Excel file.</p>
+              <p>The workflow was fragmented. Daily logging in Notion. Monthly analysis in Excel. Manual filtering and copy/paste, every single month. Zero real-time visibility, no spending insights.</p>
             </div>
+          </div>
+        </div>
 
-            <div class="pft-figure pft-figure--img pft-figure--img-cover" data-animate="media">
+        <div class="pft-zone pft-zone--problem">
+          <div class="pft-duo">
+            <div class="pft-duo-cell" data-animate="image">
+              <img
+                alt="Expense tracker screen"
+                loading="lazy"
+                decoding="async"
+                src="images/projects/personal-finance-tracker/Images/Problem1.png"
+              >
+            </div>
+            <div class="pft-duo-cell" data-animate="image">
               <img
                 alt="Research notes and planning board"
                 loading="lazy"
@@ -182,10 +142,16 @@
               >
             </div>
           </div>
-        </section>
+          <div class="pft-split pft-split--spread" data-animate="fade">
+            <h2 class="pft-split-label">Problem</h2>
+            <div class="pft-split-body">
+              <p>Every month, I had to copy everything by hand just to understand spending by category. Hours lost. No real-time visibility. No way to spot spending habits. A better solution needed to combine fast logging, live category visibility, quick export, and easy monthly history.</p>
+            </div>
+          </div>
+        </div>
 
-        <section class="pft-solution">
-          <div class="pft-solution-hero" data-animate="media">
+        <div class="pft-zone pft-zone--solution">
+          <div class="pft-hero-media" data-animate="image">
             <div class="pft-hero-card">
               <video
                 class="pft-hero-image"
@@ -199,39 +165,18 @@
               </video>
             </div>
           </div>
-
-          <div class="pft-solution-grid">
-            <div></div>
-
-            <div class="pft-solution-right">
-              <div class="pft-section">
-                <h2 class="pft-section-title" data-animate="title">SOLUTION</h2>
-                <div class="pft-section-body" data-animate="copy">
-                  <p>I designed a simple expense tracker that replaces the manual Notion-to-Excel workflow with a faster, more connected experience.</p>
-                  <p>It allows quick expense logging, live spending category insights, monthly spending history, and one-click Excel export of the monthly spends — giving me a clear view of spending without the monthly copy-paste work.</p>
-                </div>
-              </div>
+          <div class="pft-split pft-split--spread" data-animate="fade">
+            <h2 class="pft-split-label">Solution</h2>
+            <div class="pft-split-body">
+              <p>A simple expense tracker that replaces the manual Notion-to-Excel workflow with a faster, more connected experience. The result: a clear view of spending without the monthly copy-paste work.</p>
             </div>
           </div>
-        </section>
+        </div>
       </div>
     </section>
-
   </main>
-
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <span class="footer-copyright">&copy; 2026 – Jorge Santos</span>
-      <nav class="footer-nav" aria-label="Social links">
-        <a href="https://www.instagram.com/jsantoscreates/" target="_blank" rel="noopener noreferrer" class="nav-link">INSTAGRAM</a>
-        <a href="https://www.linkedin.com/in/jorge-santos-64bb52206/" target="_blank" rel="noopener noreferrer" class="nav-link">LINKEDIN</a>
-        <a href="mailto:jsantoscreates@gmail.com" class="nav-link">EMAIL</a>
-      </nav>
-    </div>
-  </footer>
 
   <div class="custom-cursor" aria-hidden="true"></div>
   <script src="main.js?v=20260414d"></script>
 </body>
 </html>
-
