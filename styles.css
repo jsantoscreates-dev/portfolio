@@ -476,16 +476,16 @@ a {
 
 .container--home .hero-text h1 {
   font-family: var(--font-serif);
-  /* vw + rem scales down on narrow phones so the line fits the padded column without horizontal scroll */
-  font-size: clamp(21px, 2.65vw + 0.8125rem, 48px);
+  font-size: clamp(32px, 8vw, 48px);
   font-weight: 400;
   letter-spacing: -0.02em;
-  line-height: 1.17;
+  line-height: 1.2;
   color: var(--color-primary);
   max-width: 100%;
-  overflow-wrap: break-word;
-  hyphens: auto;
-  -webkit-hyphens: auto;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+  -webkit-hyphens: none;
 }
 
 .container--home .name,
@@ -679,6 +679,16 @@ a {
   border-radius: 50%;
   background: var(--color-primary);
   pointer-events: none;
+}
+
+/* Mobile: reposition current-page dot below text using top-based positioning */
+@media (max-width: 767px) {
+  .sticky-links .nav-link[aria-current="page"]::after,
+  .navigation .nav-link[aria-current="page"]::after,
+  .header-bar-nav .nav-link[aria-current="page"]::after {
+    bottom: auto;
+    top: calc(100% - 10px);
+  }
 }
 
 /* ==========================================================================
@@ -884,17 +894,22 @@ a.project-card-media:focus-visible {
    Responsive Adjustments
    ========================================================================== */
 
-/* Mobile: Nav links lose underline/dot padding — match logo height so row aligns */
+/* Mobile: keep logo compact; nav links keep same padding-bottom as desktop so the active dot sits under the label (padding 0 overlapped the glyph box) */
 @media (max-width: 767px) {
-  .navigation .nav-link,
-  .header-bar-nav .nav-link,
-  .sticky-links .nav-link {
-    padding-bottom: 0;
-  }
-
   .header-bar-logo,
   .sticky-logo {
     min-height: 0;
+  }
+
+  /* Hide Resume and About links on mobile */
+  .sticky-links .nav-link[href*="drive.google.com"],
+  .sticky-links .nav-link[href="about.html"] {
+    display: none;
+  }
+
+  /* Tall link box (padding for active dot) + align-items:center pushed the logo down — align tops so name lines up with link text */
+  .sticky-nav {
+    align-items: flex-start;
   }
 }
 
@@ -945,7 +960,6 @@ a.project-card-media:focus-visible {
 .about-image-wrapper {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 5;
   background-color: var(--color-bg);
   overflow: hidden;
 }
@@ -959,9 +973,16 @@ a.project-card-media:focus-visible {
 
 .about-image {
   width: 100%;
-  height: 100%;
+  height: auto;
   display: block;
-  object-fit: cover;
+}
+
+/* Tablet+: fill the aspect-ratio container */
+@media (min-width: 768px) {
+  .about-image {
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
 .about-image-wrapper::after {
