@@ -3,21 +3,47 @@
    ========================================================================== */
 
 :root {
-  /* Colors */
-  --color-bg: #FFFFFF;
-  --color-primary: #1a1a1a;
-  --color-secondary: #555555;
+  /* Colors (Figma tokens) */
+  --color-bg: #ffffff;
+  --color-primary: #111112;
+  --color-secondary: #666666;
+  --color-text-tertiary: #aaaaaa;
+  --color-placeholder: #f5f5f5;
+  --color-case-media: #111112;
 
   /* Fonts */
   --font-sans: 'Work Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-serif: 'Lora', Georgia, serif;
+  --font-serif: 'Lora', Georgia, 'Times New Roman', serif;
+
+  /* Layout — redesign */
+  --layout-max-inner: 1520px;
+  --layout-page-x: 24px;
+  --layout-page-top: 24px;
+  --layout-section-gap: 96px;
+  --layout-project-gap: 48px;
+  --layout-project-media-h: 663px;
+
+  /* Responsive fluid container (Home + Case Study redesign) */
+  --page-pad-x: clamp(24px, 5vw, 80px);
+  --page-max: 1600px;
+  /* Two-column grid gaps (mobile-first) */
+  --grid-gap-cs: 16px;     /* mobile (361-640) */
+  --grid-cols-cs: 55fr 45fr; /* mobile (361-640) */
 
   /* Typography Scale — Mobile defaults (< 768px) */
+  --fs-display: clamp(2.125rem, 9vw, 6rem);
+  --lh-display: 1.05;
+  --ls-display: -0.02em;
   --fs-hero: 28px;
   --fs-heading-project: 18px;
   --fs-body-reading: 17px;
   --fs-body-default: 16px;
+  --fs-body-large: 18px;
   --fs-ui: 15px;
+  --fs-label: 12px;
+  --fs-title-upper: clamp(14px, 3.8vw, 20px);
+  --lh-title-upper: 1.3;
+  --ls-title-upper: 0.15em;
 
   /* Line heights (consistent across breakpoints) */
   --lh-hero: 1.2;
@@ -51,6 +77,10 @@
   --space-32: 32px;
   --page-bottom-space: 160px;
 
+  /* Easing tokens — signature curves for Framer-like feel */
+  --easing-reveal: cubic-bezier(0.22, 1, 0.36, 1); /* momentum start, graceful deceleration */
+  --easing-fade: cubic-bezier(0.25, 0.46, 0.45, 0.94); /* gentle and smooth for opacity */
+
   /* Cursor */
   --cursor-default-size: 18px;
   --cursor-link-size: 28px;
@@ -66,6 +96,15 @@
   --animation-duration-fade: 600ms;
   --animation-duration-image: 800ms;
   --animation-scale-start: 0.98;
+
+  /* Interaction tokens — hover states & micro-interactions */
+  --transition-fast: 150ms ease-out;
+  --transition-base: 200ms ease-out;
+  --transition-slow: 300ms ease-out;
+  --transition-page: 200ms ease-out;
+  --opacity-hover-text: 0.6;
+  --opacity-hover-image: 0.85;
+  --opacity-active: 0.8;
 }
 
 /* Tablet (768px+) */
@@ -75,6 +114,7 @@
     --fs-heading-project: 20px;
     --fs-body-reading: 19px;
     --fs-body-default: 17px;
+    --fs-body-large: 19px;
     --fs-ui: 16px;
 
     --spacing-page-x: 48px;
@@ -107,6 +147,11 @@
     --fs-heading-project: 22px;
     --fs-body-reading: 20px;
     --fs-body-default: 18px;
+    --fs-body-large: 20px;
+    --fs-display: 6rem;
+    --lh-display: 1.042;
+    --layout-page-x: 40px;
+    --layout-page-top: 20px;
     --fs-ui: 16px;
 
     --spacing-page-x: 80px;
@@ -154,6 +199,9 @@
     position: fixed;
     top: 0;
     left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: var(--cursor-default-size);
     height: var(--cursor-default-size);
     margin-left: calc(var(--cursor-default-size) * -0.5);
@@ -201,42 +249,51 @@
     opacity: 0;
   }
 
-  /* Project link pill state */
-  .custom-cursor.is-project {
-    width: auto;
-    height: auto;
-    padding: 10px 14px;
-    margin-left: 8px;
-    margin-top: 8px;
-    border-radius: 100px;
-    background: #000000;
+  /* Project cursor — morphing sequence driven by JS */
+  .custom-cursor.is-morphing {
+    background: #000;
     border: none;
+    overflow: hidden;
     transition:
-      padding 300ms cubic-bezier(0.4, 0, 0.2, 1),
-      margin 300ms cubic-bezier(0.4, 0, 0.2, 1),
-      background-color 300ms cubic-bezier(0.4, 0, 0.2, 1),
+      width 100ms ease,
+      height 100ms ease,
+      margin-left 100ms ease,
+      margin-top 100ms ease,
+      border-radius 100ms ease,
       opacity 140ms ease,
+      transform var(--cursor-speed) var(--cursor-ease);
+  }
+
+  .custom-cursor.is-morph-text {
+    overflow: visible;
+  }
+
+  .custom-cursor.is-reversing {
+    transition:
+      width 300ms ease,
+      height 300ms ease,
+      margin-left 300ms ease,
+      margin-top 300ms ease,
+      border-radius 300ms ease,
+      opacity 200ms ease,
       transform var(--cursor-speed) var(--cursor-ease);
   }
 
   .cursor-text {
     display: block;
-    font-family: var(--font-sans);
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    color: #FFFFFF;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.55;
+    color: #fff;
     white-space: nowrap;
     opacity: 0;
-    transform: scale(0.9);
-    transition: opacity 200ms ease, transform 200ms ease;
+    transition: opacity 100ms ease;
+    pointer-events: none;
   }
 
-  .custom-cursor.is-project .cursor-text {
+  .custom-cursor.is-morph-text .cursor-text {
     opacity: 1;
-    transform: scale(1);
-    transition: opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 50ms,
-      transform 300ms cubic-bezier(0.4, 0, 0.2, 1) 50ms;
   }
 }
 
@@ -345,6 +402,13 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scrollbar-gutter: stable;
+}
+
+/* Smooth scroll — respects reduced motion preference */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 body {
@@ -901,9 +965,8 @@ a.project-card-media:focus-visible {
     min-height: 0;
   }
 
-  /* Hide Resume and About links on mobile */
-  .sticky-links .nav-link[href*="drive.google.com"],
-  .sticky-links .nav-link[href="about.html"] {
+  /* Hide Resume link on mobile */
+  .sticky-links .nav-link[href*="drive.google.com"] {
     display: none;
   }
 
@@ -1350,4 +1413,1742 @@ body.pft-case-study .pft-duo-cell img {
     flex-shrink: 0;
     flex-wrap: nowrap;
   }
+}
+
+/* ==========================================================================
+   Redesign — Home, Case study, CV About (Figma 2338:*)
+   ========================================================================== */
+
+.page-redesign-home .sticky-nav,
+.page-redesign-cs .sticky-nav,
+.page-redesign-cv .sticky-nav {
+  display: none;
+}
+
+.page-redesign-home .container.container--home,
+.page-redesign-cs .container.container--pft,
+.page-redesign-cv .container.container--about {
+  max-width: calc(var(--layout-max-inner) + 2 * var(--layout-page-x));
+  padding-left: var(--layout-page-x);
+  padding-right: var(--layout-page-x);
+  padding-top: var(--layout-page-top);
+  padding-bottom: 32px;
+}
+
+.home-shell,
+.cs-shell,
+.cv-shell {
+  width: 100%;
+  max-width: var(--layout-max-inner);
+  margin-inline: auto;
+}
+
+/* ----- Home hero ----- */
+
+.home-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0;
+  margin-bottom: var(--layout-section-gap);
+}
+
+.home-hero__intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 100%;
+  gap: var(--space-24);
+}
+
+.home-hero__row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-24);
+  width: 100%;
+}
+
+.home-display {
+  font-family: var(--font-serif);
+  font-size: var(--fs-display);
+  font-weight: 400;
+  line-height: var(--lh-display);
+  letter-spacing: var(--ls-display);
+  color: var(--color-primary);
+  max-width: 908px;
+  margin: 0;
+}
+
+.home-display span {
+  display: block;
+}
+
+.home-display p {
+  margin: 0;
+}
+
+.home-display p + p {
+  margin-top: 0;
+}
+
+.home-links {
+  font-family: var(--font-serif);
+  font-size: var(--fs-body-large);
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--color-primary);
+  width: 100%;
+  max-width: 325px;
+}
+
+.home-links p {
+  margin: 0;
+}
+
+.home-links p + p {
+  margin-top: 0;
+}
+
+.home-links a {
+  text-decoration: none;
+}
+
+.home-links a:hover {
+  opacity: 0.85;
+}
+
+.home-about {
+  font-family: var(--font-serif);
+  font-size: var(--fs-body-large);
+  line-height: 1.55;
+  color: var(--color-secondary);
+  width: 100%;
+  max-width: 325px;
+  margin: 0;
+  align-self: flex-end;
+}
+
+/* ----- Home projects ----- */
+
+.projects-redesign {
+  display: flex;
+  flex-direction: column;
+  gap: var(--layout-project-gap);
+  width: 100%;
+}
+
+.home-project {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-16);
+  width: 100%;
+}
+
+.home-project__media {
+  position: relative;
+  width: 100%;
+  background-color: var(--color-placeholder);
+  overflow: hidden;
+  aspect-ratio: 900 / 675;
+}
+
+.home-project__media:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 4px;
+}
+
+.home-project__media .project-card-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.home-project__aside {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  width: 100%;
+  max-width: 326px;
+}
+
+.home-project__title {
+  font-family: var(--font-sans);
+  font-size: var(--fs-title-upper);
+  font-weight: 400;
+  line-height: var(--lh-title-upper);
+  letter-spacing: var(--ls-title-upper);
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.home-project__label {
+  font-family: var(--font-serif);
+  font-size: var(--fs-label);
+  line-height: 1.4;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.home-project__header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.home-project__desc {
+  font-family: var(--font-serif);
+  font-size: var(--fs-body-large);
+  line-height: 1.55;
+  color: var(--color-secondary);
+  margin: 0;
+}
+
+@media (min-width: 1024px) {
+  .home-hero__row {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-32);
+  }
+
+  .home-links {
+    flex-shrink: 0;
+    width: 325px;
+    max-width: 325px;
+  }
+
+  .home-about {
+    margin-top: 0;
+  }
+
+  .home-project {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  /* Image scales with the row; aside stays fixed at 326.523px and the
+     remaining 134.477px (= 1361 − 900 − 326.523) lands between them via
+     `justify-content: space-between`. At ≥1440 the image caps at 900px. */
+  .home-project__media {
+    flex: 0 0 auto;
+    width: calc(100% - 326.523px - 134.477px);
+    max-width: 900px;
+  }
+
+  .home-project__aside {
+    flex: 0 0 326.523px;
+    width: 326.523px;
+    max-width: 326.523px;
+    padding-left: 0;
+  }
+}
+
+/* Tablet only: full-bleed image to viewport edges. Mobile keeps the image
+   inside the container padding (per Figma mobile design). */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .container--home .home-project__media {
+    margin-left: calc(-1 * var(--layout-page-x));
+    margin-right: calc(-1 * var(--layout-page-x));
+    width: calc(100% + 2 * var(--layout-page-x));
+    max-width: none;
+  }
+}
+
+/* ----- Shared footer (redesign) ----- */
+
+.footer-redesign {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+  width: 100%;
+  max-width: var(--layout-max-inner);
+  margin-inline: auto;
+  margin-top: var(--layout-section-gap);
+  min-height: 48px;
+  gap: var(--space-16);
+}
+
+/* Wrapper around (optional) contact block + copy. On desktop it disappears
+   from layout via `display: contents` so the existing flex row on
+   `.footer-redesign` keeps copy and button on opposite ends. On mobile it
+   becomes a flex column that stacks the contact block above the copy. */
+.footer-redesign__info {
+  display: contents;
+}
+
+.footer-redesign__contact {
+  display: none;
+}
+
+.footer-redesign__copy {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--color-secondary);
+  max-width: 325px;
+  margin: 0;
+}
+
+.footer-redesign__top {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 12px;
+  border: 0.8px solid var(--color-primary);
+  border-radius: 24px;
+  background: transparent;
+  color: var(--color-primary);
+  cursor: pointer;
+  transition: opacity 180ms ease;
+}
+
+.footer-redesign__top:hover {
+  opacity: 0.75;
+}
+
+.footer-redesign__top svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+@media (max-width: 767px) {
+  /* Default mobile footer: vertical stack. Home mobile overrides this below
+     to a row layout (with the contact info column on the left). */
+  .footer-redesign {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ----- Case study layout ----- */
+
+.cs-lead {
+  display: flex;
+  flex-direction: column;
+  gap: var(--layout-section-gap);
+  margin-bottom: var(--layout-section-gap);
+}
+
+.cs-topbar {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-24);
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .cs-topbar {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+}
+
+.cs-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-8);
+  font-family: var(--font-serif);
+  font-size: var(--fs-body-large);
+  line-height: 1.55;
+}
+
+.cs-breadcrumb a {
+  color: var(--color-text-tertiary);
+  text-decoration: none;
+}
+
+.cs-breadcrumb a[aria-current="page"] {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.cs-breadcrumb__sep {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  background: no-repeat center / contain;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M16 17L21 12L16 7M21 12H3' stroke='%23AAAAAA' stroke-width='0.8' stroke-linecap='square' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+.cs-inline-links {
+  font-family: var(--font-serif);
+  font-size: var(--fs-body-large);
+  line-height: 1.55;
+  color: var(--color-primary);
+  width: 100%;
+  max-width: 325px;
+}
+
+.cs-inline-links p {
+  margin: 0;
+}
+
+.cs-inline-links a {
+  text-decoration: none;
+}
+
+.cs-headline {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 100%;
+  gap: 0;
+}
+
+.cs-display {
+  font-family: var(--font-serif);
+  font-size: var(--fs-display);
+  font-weight: 400;
+  line-height: var(--lh-display);
+  letter-spacing: var(--ls-display);
+  color: var(--color-primary);
+  margin: 0;
+  width: min-content;
+  min-width: 100%;
+}
+
+.cs-display p {
+  margin: 0;
+}
+
+.cs-display span {
+  display: block;
+}
+
+.cs-meta {
+  font-family: var(--font-serif);
+  font-size: var(--fs-body-large);
+  line-height: 1.55;
+  color: var(--color-secondary);
+  width: 100%;
+  max-width: 325px;
+  margin: 2rem 0 0;
+}
+
+.cs-meta p {
+  margin: 0;
+}
+
+.cs-rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--layout-project-gap);
+  width: 100%;
+}
+
+/* CSS Grid two-column row (image / aside) — fluid 60/40 across breakpoints.
+   Mobile-first: 55/45 gap 16px → tablet 60/40 gap 40px → desktop 60/40 gap 80px.
+   <360px stacks vertically. */
+.cs-row {
+  display: grid;
+  grid-template-columns: 55fr 45fr;
+  gap: var(--grid-gap-cs);
+  width: 100%;
+  align-items: start;
+}
+
+@media (max-width: 360px) {
+  .cs-row {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+.cs-row__media {
+  position: relative;
+  width: 100%;
+  background-color: var(--color-case-media);
+  overflow: hidden;
+  aspect-ratio: 900 / 720;
+  min-width: 0;
+}
+
+.cs-row__media img,
+.cs-row__media video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cs-row__aside {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  width: 100%;
+  min-width: 0;
+}
+
+.cs-row__label {
+  font-family: var(--font-sans);
+  font-size: var(--fs-title-upper);
+  font-weight: 400;
+  line-height: var(--lh-title-upper);
+  letter-spacing: var(--ls-title-upper);
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.cs-row__body {
+  font-family: var(--font-serif);
+  font-size: var(--fs-body-large);
+  line-height: 1.55;
+  color: var(--color-secondary);
+}
+
+.cs-row__body p {
+  margin: 0;
+}
+
+.cs-row__body p + p {
+  margin-top: 0.75em;
+}
+
+@media (min-width: 641px) {
+  .cs-row {
+    grid-template-columns: 60fr 40fr;
+    gap: 40px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .cs-row {
+    grid-template-columns: 60fr 40fr;
+    gap: 80px;
+  }
+
+  /* Figma case study: flex layout with fixed 326.523px aside and a constant
+     134.477px gap between image and text (= 1361 − 900 − 326.523).
+     Image caps at 900px at ≥1440; scales below. */
+  .page-cs-figma .cs-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  .page-cs-figma .cs-row__media {
+    flex: 0 0 auto;
+    width: calc(100% - 326.523px - 134.477px);
+    max-width: 900px;
+  }
+
+  .page-cs-figma .cs-row__aside {
+    flex: 0 0 326.523px;
+    width: 326.523px;
+    max-width: 326.523px;
+  }
+}
+
+/* ----- CV About ----- */
+
+.cv-page {
+  width: 100%;
+}
+
+.cv-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-32);
+  margin-bottom: var(--layout-project-gap);
+}
+
+@media (min-width: 768px) {
+  .cv-header {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-32);
+  }
+}
+
+.cv-header__name {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: -0.005em;
+}
+
+.cv-header__name strong {
+  font-weight: 400;
+  color: #1a1a1a;
+}
+
+.cv-header__role {
+  color: var(--color-secondary);
+  font-weight: 400;
+}
+
+.cv-header__cols {
+  display: flex;
+  flex-direction: column;
+  gap: var(--layout-project-gap);
+}
+
+@media (min-width: 768px) {
+  .cv-header__cols {
+    flex-direction: row;
+    gap: 48px;
+  }
+}
+
+.cv-header__col {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: -0.005em;
+}
+
+.cv-header__col a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.cv-header__col a:hover {
+  opacity: 0.85;
+}
+
+.cv-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-32);
+}
+
+.cv-section--spaced {
+  margin-top: var(--layout-project-gap);
+}
+
+.cv-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+
+@media (min-width: 768px) {
+  .cv-row {
+    display: grid;
+    grid-template-columns: 86px minmax(140px, 196px) minmax(0, 649px);
+    column-gap: 64px;
+    row-gap: var(--space-16);
+    align-items: start;
+  }
+
+  .cv-row__label {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--color-secondary);
+    letter-spacing: -0.005em;
+  }
+
+  .cv-row__meta {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--color-secondary);
+  }
+
+  .cv-row__meta strong {
+    display: block;
+    font-weight: 400;
+    color: var(--color-primary);
+  }
+
+  .cv-row__desc {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--color-secondary);
+  }
+
+  .cv-row--sub .cv-row__label {
+    visibility: hidden;
+  }
+}
+
+@media (max-width: 767px) {
+  .cv-row__label {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--color-secondary);
+    margin-bottom: -8px;
+  }
+
+  .cv-row--sub .cv-row__label {
+    display: none;
+  }
+
+  .cv-row__meta {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    color: var(--color-primary);
+  }
+
+  .cv-row__meta strong {
+    font-weight: 500;
+  }
+
+  .cv-row__desc {
+    font-family: var(--font-serif);
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--color-secondary);
+  }
+}
+
+.cv-skills {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-32);
+}
+
+@media (min-width: 768px) {
+  .cv-skills {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 108px;
+  }
+
+  .cv-skills__label {
+    flex-shrink: 0;
+    font-family: var(--font-sans);
+    font-size: 16px;
+    color: var(--color-secondary);
+    letter-spacing: -0.005em;
+  }
+
+  .cv-skills__grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-32);
+    flex: 1;
+    max-width: 931px;
+  }
+
+  .cv-skill-row {
+    display: flex;
+    flex-direction: row;
+    gap: var(--space-24);
+    align-items: flex-start;
+  }
+
+  .cv-skill-row__cat {
+    flex: 0 0 104px;
+    font-family: var(--font-sans);
+    font-size: 16px;
+    color: var(--color-primary);
+    letter-spacing: -0.005em;
+  }
+
+  .cv-skill-row__text {
+    flex: 1;
+    font-family: var(--font-serif);
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--color-secondary);
+    max-width: 649px;
+  }
+}
+
+@media (max-width: 767px) {
+  .cv-skills__label {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--color-secondary);
+    margin-bottom: var(--space-8);
+  }
+
+  .cv-skills__grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-24);
+  }
+
+  .cv-skill-row__cat {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    color: var(--color-primary);
+    margin-bottom: 4px;
+  }
+
+  .cv-skill-row__text {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--color-secondary);
+  }
+}
+
+.cv-body .footer-redesign {
+  margin-top: var(--layout-section-gap);
+}
+
+/* ----- Home — pixel match Figma 2338:724 ----- */
+
+.page-redesign-home {
+  --font-home-serif: 'Times New Roman', Times, serif;
+  --font-home-sans: Arial, Helvetica, sans-serif;
+}
+
+.page-redesign-home .home-display,
+.page-redesign-home .home-links,
+.page-redesign-home .home-about,
+.page-redesign-home .home-project__label,
+.page-redesign-home .home-project__desc,
+.page-redesign-home .footer-redesign__copy {
+  font-family: var(--font-home-serif);
+}
+
+.page-redesign-home .home-project__title {
+  font-family: var(--font-home-sans);
+  letter-spacing: 0.6px;
+}
+
+@media (min-width: 1440px) {
+  .page-redesign-home .container.container--home {
+    padding-top: 32px;
+  }
+
+  .page-redesign-home .home-display {
+    font-size: 96px;
+    line-height: 96px;
+    letter-spacing: -1.92px;
+    width: 908px;
+    max-width: 908px;
+  }
+
+  .page-redesign-home .home-hero {
+    margin-bottom: 160px;
+  }
+
+  .page-redesign-home .home-hero__intro {
+    gap: 0;
+  }
+
+  .page-redesign-home .home-project__media {
+    flex: 0 0 900px;
+    width: 900px;
+    max-width: 900px;
+  }
+
+  .page-redesign-home .home-project__aside {
+    flex: 0 0 326.523px;
+    width: 326.523px;
+    max-width: 326.523px;
+  }
+
+  .page-redesign-home .home-project__title {
+    font-size: 22px;
+    letter-spacing: 0.44px;
+  }
+
+  .page-redesign-home .footer-redesign {
+    margin-top: 160px;
+  }
+}
+
+/* ============================================================
+   ----- Home — Mobile (<768px) — pixel match Figma 11:602 -----
+   Page width: 393 (375–414 mobile range). Main container: 362px
+   wide with 15px left padding, 24px top padding. All vertical
+   spacings and typography follow the Figma frame exactly.
+   ============================================================ */
+@media (max-width: 767px) {
+  /* Page container: 15px side padding, 24px top (per Figma frame x:15,y:24,w:362).
+     Bottom padding inherits the unified 32px set globally. */
+  .page-redesign-home .container.container--home {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 24px;
+  }
+
+  /* Hero email/socials block hidden — moves into the footer on mobile */
+  .page-redesign-home .home-links {
+    display: none;
+  }
+
+  /* Hero spacing: 48px from hero block to first project */
+  .page-redesign-home .home-hero {
+    margin-bottom: 48px;
+    align-items: flex-start;
+  }
+
+  .page-redesign-home .home-hero__intro {
+    align-items: flex-start;
+    gap: 32px;
+  }
+
+  .page-redesign-home .home-hero__row {
+    width: 100%;
+    align-items: flex-start;
+  }
+
+  .page-redesign-home .home-display {
+    font-size: 48px;
+    line-height: 1;
+    letter-spacing: -0.96px;
+    width: 100%;
+    max-width: none;
+    text-align: left;
+    text-indent: 0;
+    padding: 0;
+    margin: 0;
+  }
+
+  .page-redesign-home .home-display br {
+    display: none;
+  }
+
+  .page-redesign-home .home-display__nowrap {
+    white-space: nowrap;
+  }
+
+  .page-redesign-home .home-about {
+    font-family: var(--font-home-serif);
+    font-size: 18px;
+    line-height: 1.55;
+    color: var(--color-secondary);
+    width: 268px;
+    max-width: 268px;
+    align-self: flex-end;
+  }
+
+  /* Projects: stacked vertically, 64px between each. Image inside the
+     container padding (NOT full-bleed on mobile per Figma). */
+  .page-redesign-home .projects-redesign {
+    gap: 64px;
+  }
+
+  .page-redesign-home .home-project {
+    gap: 24px;
+  }
+
+  .page-redesign-home .home-project__media {
+    aspect-ratio: 362 / 295;
+    width: 100%;
+    max-width: none;
+  }
+
+  .page-redesign-home .home-project__aside {
+    gap: 8px;
+    width: 100%;
+    max-width: none;
+  }
+
+  .page-redesign-home .home-project__header {
+    gap: 2px;
+  }
+
+  .page-redesign-home .home-project__title {
+    font-size: 20px;
+    line-height: 1.3;
+    letter-spacing: 0.4px;
+  }
+
+  .page-redesign-home .home-project__label {
+    font-size: 11px;
+    line-height: 1.4;
+  }
+
+  .page-redesign-home .home-project__desc {
+    font-size: 18px;
+    line-height: 1.55;
+  }
+
+  /* Footer: row layout (contact info on the left, back-to-top button on the
+     right). The contact block reveals here and pairs with the copyright in
+     a 16px-gap column inside `.footer-redesign__info`. */
+  .page-redesign-home .footer-redesign {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-top: 96px;
+    gap: 0;
+  }
+
+  .page-redesign-home .footer-redesign__info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .page-redesign-home .footer-redesign__contact {
+    display: block;
+    font-family: var(--font-home-serif);
+    font-size: 20px;
+    line-height: 1.55;
+    color: var(--color-primary);
+  }
+
+  .page-redesign-home .footer-redesign__contact p {
+    margin: 0;
+  }
+
+  .page-redesign-home .footer-redesign__contact a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .page-redesign-home .footer-redesign__copy {
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: none;
+  }
+}
+
+/* ----- Case Study layout — pixel match Figma 2338:817 (PFT + template) ----- */
+
+.page-cs-figma {
+  --font-pft-serif: 'Times New Roman', Times, serif;
+  --font-pft-sans: Arial, Helvetica, sans-serif;
+}
+
+.page-cs-figma .cs-lead.cs-lead--figma {
+  gap: 96px;
+  margin-bottom: 0;
+}
+
+.page-cs-figma .cs-hero-zone {
+  display: flex;
+  flex-direction: column;
+  gap: 96px;
+  width: 100%;
+}
+
+@media (min-width: 1440px) {
+  .page-cs-figma .cs-hero-zone {
+    min-height: 513px;
+    box-sizing: border-box;
+  }
+}
+
+.page-cs-figma .footer-redesign--figma-gap {
+  margin-top: 160px;
+}
+
+.page-cs-figma .cs-inline-links__email {
+  margin: 0;
+  font-family: var(--font-pft-serif);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--color-primary);
+}
+
+.page-cs-figma .cs-meta {
+  margin-top: 0;
+  font-family: var(--font-pft-serif);
+}
+
+.page-cs-figma .cs-meta p {
+  margin: 0;
+}
+
+.page-cs-figma .cs-display {
+  font-family: var(--font-pft-serif);
+  font-size: 96px;
+  line-height: 96px;
+  letter-spacing: -1.92px;
+}
+
+@media (max-width: 1439px) {
+  .page-cs-figma .cs-display {
+    font-size: var(--fs-display);
+    line-height: var(--lh-display);
+    letter-spacing: var(--ls-display);
+  }
+}
+
+.page-cs-figma .cs-breadcrumb,
+.page-cs-figma .cs-inline-links {
+  font-family: var(--font-pft-serif);
+  font-size: 20px;
+}
+
+@media (max-width: 1439px) {
+  .page-cs-figma .cs-breadcrumb,
+  .page-cs-figma .cs-inline-links,
+  .page-cs-figma .cs-inline-links__email {
+    font-size: var(--fs-body-large);
+  }
+}
+
+.page-cs-figma .cs-row__label {
+  font-family: var(--font-pft-sans);
+  font-size: 22px;
+  line-height: 1.3;
+  letter-spacing: 0.44px;
+  text-transform: uppercase;
+}
+
+.page-cs-figma .cs-row__label.cs-row__label--sentence {
+  text-transform: none;
+}
+
+.page-cs-figma .cs-row__body {
+  font-family: var(--font-pft-serif);
+  font-size: 20px;
+}
+
+@media (max-width: 1439px) {
+  .page-cs-figma .cs-row__body {
+    font-size: var(--fs-body-large);
+  }
+}
+
+.page-cs-figma .cs-row__body p + p {
+  margin-top: 0;
+}
+
+.page-cs-figma .cs-row__body-gap {
+  margin: 0;
+  line-height: 1.55;
+  font-size: inherit;
+  min-height: 1.55em;
+}
+
+.page-cs-figma .footer-redesign__copy {
+  font-family: var(--font-pft-serif);
+}
+
+/* Desktop Standard (1440+) — Figma origin pixel-perfect overrides */
+@media (min-width: 1440px) {
+  .page-redesign-cs.page-cs-figma .container.container--pft {
+    padding-top: 32px;
+  }
+
+  .page-cs-figma .cs-lead.cs-lead--figma {
+    gap: 160px;
+  }
+}
+
+/* ==========================================================================
+   Responsive — Fluid container & typography (Home + Case Study redesign)
+   Breakpoints: <=360 fallback / 361-640 mobile / 641-1024 tablet / >=1025 desktop
+   ========================================================================== */
+
+/* Fluid container: 24-80px padding, max 1600px centered.
+   Overrides the legacy `(100vw - 1280px) / 2` padding for redesign pages. */
+.page-redesign-home .container,
+.page-redesign-cs .container {
+  max-width: var(--page-max);
+  margin-inline: auto;
+  padding-left: var(--page-pad-x);
+  padding-right: var(--page-pad-x);
+}
+
+@media (min-width: 1024px) {
+  .page-redesign-home .container.container--home,
+  .page-redesign-home .container.container--pft,
+  .page-redesign-cs .container.container--home,
+  .page-redesign-cs .container.container--pft {
+    padding-left: var(--page-pad-x);
+    padding-right: var(--page-pad-x);
+  }
+}
+
+/* Sticky nav and footer-inner inherit the same fluid horizontal padding
+   so they line up with the content column. */
+@media (min-width: 1024px) {
+  body.page-redesign-home .sticky-nav,
+  body.page-redesign-cs .sticky-nav,
+  body.page-redesign-home .footer-inner,
+  body.page-redesign-cs .footer-inner {
+    padding-left: var(--page-pad-x);
+    padding-right: var(--page-pad-x);
+  }
+}
+
+/* ----- Case Study — Topbar collapse on mobile (<=640px) -----
+   Hide breadcrumb segments and contact links; show single "← Works" back link. */
+
+.cs-breadcrumb__back {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-primary);
+  text-decoration: none;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.cs-breadcrumb__back:hover {
+  opacity: 0.85;
+}
+
+@media (max-width: 640px) {
+  .page-redesign-cs .cs-topbar > .cs-inline-links {
+    display: none;
+  }
+
+  .page-redesign-cs .cs-breadcrumb > a:not(.cs-breadcrumb__back),
+  .page-redesign-cs .cs-breadcrumb > span:not(.cs-breadcrumb__back) {
+    display: none;
+  }
+
+  .page-redesign-cs .cs-breadcrumb__back {
+    display: inline-flex;
+  }
+}
+
+/* ----- Case Study — Hero zone gap responsive ----- */
+
+.page-cs-figma .cs-hero-zone {
+  gap: 32px; /* mobile <= 360 fallback baseline */
+}
+
+@media (min-width: 361px) {
+  .page-cs-figma .cs-hero-zone {
+    gap: 40px; /* mobile */
+  }
+}
+
+@media (min-width: 641px) {
+  .page-cs-figma .cs-hero-zone {
+    gap: 64px; /* tablet */
+  }
+}
+
+@media (min-width: 1025px) {
+  .page-cs-figma .cs-hero-zone {
+    gap: 96px; /* desktop — Figma exact */
+  }
+}
+
+/* The desktop-only min-height 513px override defined earlier still applies at >=1440. */
+
+/* ----- Case Study — Footer top gap responsive ----- */
+
+.page-cs-figma .footer-redesign--figma-gap {
+  margin-top: 48px; /* <= 360 fallback */
+}
+
+@media (min-width: 361px) {
+  .page-cs-figma .footer-redesign--figma-gap {
+    margin-top: 96px; /* mobile — Figma exact (96px from content to footer) */
+  }
+}
+
+@media (min-width: 641px) {
+  .page-cs-figma .footer-redesign--figma-gap {
+    margin-top: 96px; /* tablet */
+  }
+}
+
+@media (min-width: 1025px) {
+  .page-cs-figma .footer-redesign--figma-gap {
+    margin-top: 160px; /* desktop — Figma exact */
+  }
+}
+
+/* ----- Case Study (Figma) — Row stacking on mobile/tablet -----
+   Below 1025px: image full-width on top, text below (per Figma mobile).
+   Override the generic .cs-row grid for the Figma case study layout. */
+
+@media (max-width: 1024px) {
+  .page-cs-figma .cs-row {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  /* Mobile/tablet: image keeps Figma aspect ratio of 362:290 (~1.25:1).
+     The previous 900:720 ratio was a desktop-only intent. */
+  .page-cs-figma .cs-row__media {
+    aspect-ratio: 362 / 290;
+    width: 100%;
+  }
+
+  /* Mobile/tablet: stack project sections with 64px gap (Figma mobile spec) */
+  .page-cs-figma .cs-rows {
+    gap: 64px;
+  }
+
+  /* Mobile/tablet: aside (label + body) gets 8px gap between label and body */
+  .page-cs-figma .cs-row__aside {
+    gap: 8px;
+  }
+}
+
+/* ----- Case Study (Figma) — Mobile footer with contact info -----
+   Below 641px: footer becomes row layout with contact block (email + socials)
+   stacked above the copyright on the left, and back-to-top button on the right
+   (matches home page footer pattern). */
+
+@media (max-width: 640px) {
+  .page-cs-figma .footer-redesign {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 0;
+  }
+
+  .page-cs-figma .footer-redesign__info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .page-cs-figma .footer-redesign__contact {
+    display: block;
+    font-family: var(--font-pft-serif);
+    font-size: 18px;
+    line-height: 1.55;
+    color: var(--color-primary);
+  }
+
+  .page-cs-figma .footer-redesign__contact p {
+    margin: 0;
+  }
+
+  .page-cs-figma .footer-redesign__contact a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+}
+
+/* ----- Case Study — Typography per breakpoint ----- */
+
+/* Mobile defaults (<=640) — pixel match Figma 11:561 */
+@media (max-width: 640px) {
+  /* Container: 16px left/right padding, 24px top (per Figma) */
+  .page-redesign-cs.page-cs-figma .container.container--pft,
+  .page-cs-figma .container.container--pft {
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 24px;
+  }
+
+  /* Headline left-aligned on mobile (title fills container, meta sits right) */
+  .page-cs-figma .cs-display {
+    font-size: 48px;
+    line-height: 1;
+    letter-spacing: -0.96px;
+    text-align: left;
+  }
+
+  .page-cs-figma .cs-meta {
+    font-size: 18px;
+    line-height: 1.55;
+    max-width: 268px;
+    width: 268px;
+    margin-top: 0;
+  }
+
+  .page-cs-figma .cs-row__body,
+  .page-cs-figma .cs-row__body-gap {
+    font-size: 18px;
+    line-height: 1.55;
+  }
+
+  .page-cs-figma .cs-breadcrumb,
+  .page-cs-figma .cs-inline-links,
+  .page-cs-figma .cs-inline-links__email {
+    font-size: 18px;
+    line-height: 1.55;
+  }
+
+  .page-cs-figma .cs-row__label {
+    font-size: 20px;
+    line-height: 1.3;
+    letter-spacing: 0.4px;
+  }
+
+  .page-cs-figma .footer-redesign__copy {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+}
+
+/* Tablet (641-1024) — about 70% of desktop display, 18px body */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .page-cs-figma .cs-display {
+    font-size: 67px;
+    line-height: 72px;
+    letter-spacing: -1.4px;
+  }
+
+  .page-cs-figma .cs-meta,
+  .page-cs-figma .cs-row__body,
+  .page-cs-figma .cs-row__body-gap {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+
+  .page-cs-figma .cs-breadcrumb,
+  .page-cs-figma .cs-inline-links,
+  .page-cs-figma .cs-inline-links__email {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+
+  .page-cs-figma .cs-row__label {
+    font-size: 18px;
+    line-height: 1.3;
+    letter-spacing: 0.5px;
+  }
+
+  .page-cs-figma .footer-redesign__copy {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
+/* ----- Case Study — Lead spacing responsive ----- */
+
+.page-cs-figma .cs-lead.cs-lead--figma {
+  gap: 64px; /* mobile/tablet base */
+}
+
+@media (min-width: 1025px) {
+  .page-cs-figma .cs-lead.cs-lead--figma {
+    gap: 96px; /* desktop — Figma exact */
+  }
+}
+
+/* ----- Footer copy: stack already drops at 768; lift to 640 for new system ----- */
+
+@media (max-width: 640px) {
+  .footer-redesign {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ==========================================================================
+   Interaction Utilities — Hover States & Micro-interactions
+   ========================================================================== */
+
+/* ----- Text links with underline (contact links, social links) -----
+   Default: underlined, full opacity
+   Hover: opacity reduces to --opacity-hover-text (0.6)
+   Active: opacity 0.8 + slight scale
+   ------------------------------------------------------------------ */
+
+.home-links a,
+.footer-redesign__contact a,
+.cs-inline-links a,
+.cs-breadcrumb a:not(.cs-breadcrumb__back) {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: opacity var(--transition-base);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .home-links a:hover,
+  .footer-redesign__contact a:hover,
+  .cs-inline-links a:hover,
+  .cs-breadcrumb a:not(.cs-breadcrumb__back):hover {
+    opacity: var(--opacity-hover-text);
+  }
+}
+
+.home-links a:active,
+.footer-redesign__contact a:active,
+.cs-inline-links a:active,
+.cs-breadcrumb a:not(.cs-breadcrumb__back):active {
+  opacity: var(--opacity-active);
+}
+
+/* Breadcrumb back link (mobile) — inherits base hover behavior */
+.cs-breadcrumb__back {
+  transition: opacity var(--transition-base);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cs-breadcrumb__back:hover {
+    opacity: var(--opacity-hover-text);
+  }
+}
+
+.cs-breadcrumb__back:active {
+  opacity: var(--opacity-active);
+}
+
+/* ----- Focus states for accessibility ----- */
+
+.home-links a:focus-visible,
+.footer-redesign__contact a:focus-visible,
+.cs-inline-links a:focus-visible,
+.cs-breadcrumb a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* ----- Reduced motion: remove transform-based transitions ----- */
+
+@media (prefers-reduced-motion: reduce) {
+  .home-links a,
+  .footer-redesign__contact a,
+  .cs-inline-links a,
+  .cs-breadcrumb a {
+    transition: opacity var(--transition-fast);
+  }
+}
+
+/* ----- Project cards (Home) — interactive hover states -----
+   Hover over entire card triggers:
+   - Thumbnail: opacity reduces to 85%
+   - Title: gains underline + arrow slides in from left
+   ----------------------------------------------------------- */
+
+
+/* Focus state for keyboard navigation */
+.home-project__media:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 4px;
+}
+
+/* Mobile/touch: show arrow permanently as visual affordance */
+@media (hover: none), (pointer: coarse) {
+  .home-project__arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Reduced motion: instant state changes, no transforms */
+@media (prefers-reduced-motion: reduce) {
+  .home-project__media,
+  .home-project__title,
+  .home-project__arrow {
+    transition: none;
+  }
+
+  .home-project__arrow {
+    transform: none;
+  }
+}
+
+/* ----- Back to top button -----
+   Default: opacity 60%
+   Hover: opacity 100% + lift (-2px)
+   ------------------------------ */
+
+.footer-redesign__top {
+  opacity: 0.6;
+  transition: opacity var(--transition-base), transform var(--transition-base);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .footer-redesign__top:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+
+.footer-redesign__top:active {
+  opacity: var(--opacity-active);
+  transform: translateY(0);
+}
+
+.footer-redesign__top:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+  opacity: 1;
+}
+
+/* Reduced motion: opacity only, no transform */
+@media (prefers-reduced-motion: reduce) {
+  .footer-redesign__top {
+    transition: opacity var(--transition-fast);
+  }
+
+  .footer-redesign__top:hover {
+    transform: none;
+  }
+}
+
+/* Fallback: if JS fails, text is visible */
+html:not(.js-page-anim) .home-display .line-text {
+  transform: none;
+}
+
+/* ==========================================================================
+   Page Transitions — View Transitions API
+   ========================================================================== */
+
+/* Opt the root element into view transitions */
+@view-transition {
+  navigation: auto;
+}
+
+/* Default crossfade animation — 200ms ease-out */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: var(--transition-page);
+  animation-timing-function: ease-out;
+}
+
+::view-transition-old(root) {
+  animation-name: fade-out;
+}
+
+::view-transition-new(root) {
+  animation-name: fade-in;
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Reduced motion: instant transition (no animation) */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   Page Load Animation (All pages) — Unified entrance system
+   ========================================================================== */
+
+/*
+  Animation sequence (identical on every page):
+  1. Top elements (100ms): nav, links, breadcrumbs — slide down + fade
+  2. Headline (200ms): mask reveal line by line
+  3. Media (200ms): images, videos — slide up + fade (all together)
+  4. Body text (500ms): paragraphs — slide up + fade
+  5. Below-fold elements: scroll-triggered with Intersection Observer
+
+  Elements with NO animation:
+  - Project titles on Home page
+  - Footer
+*/
+
+/* ----- Initial hidden states (JS adds .js-page-anim to html) ----- */
+
+/* ACT 1: Top elements (enter from top — same direction as first project) */
+html.js-page-anim [data-anim="top"] {
+  opacity: 0;
+  transform: translateY(-30px);
+}
+
+/* ACT 1: First project thumbnail + description (enter from bottom) */
+html.js-page-anim [data-anim="act1"] {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+/* ACT 2: Headline mask reveal structure */
+html.js-page-anim [data-anim="headline"] .line-mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.18em;
+  margin-bottom: -0.18em;
+}
+
+html.js-page-anim [data-anim="headline"] .line-text {
+  display: block;
+  transform: translateY(110%); /* slightly more than 100% to avoid pixel gap */
+}
+
+/* ACT 3: About text (fade only, no movement) */
+html.js-page-anim [data-anim="about"] {
+  opacity: 0;
+}
+
+/* Scroll-triggered: media and body elements below fold (longer travel) */
+html.js-page-anim [data-anim="media"],
+html.js-page-anim [data-anim="body"] {
+  opacity: 0;
+  transform: translateY(60px);
+}
+
+/* ----- Revealed states ----- */
+
+html.js-page-anim [data-anim="top"].is-visible,
+html.js-page-anim [data-anim="act1"].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 800ms var(--easing-reveal), transform 800ms var(--easing-reveal);
+}
+
+html.js-page-anim [data-anim="headline"] .line-text.is-visible {
+  transform: translateY(0);
+  transition: transform 700ms var(--easing-reveal);
+}
+
+html.js-page-anim [data-anim="about"].is-visible {
+  opacity: 1;
+  transition: opacity 800ms var(--easing-fade);
+}
+
+html.js-page-anim [data-anim="media"].is-visible,
+html.js-page-anim [data-anim="body"].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 800ms var(--easing-reveal), transform 800ms var(--easing-reveal);
+}
+
+/* ----- Prefers reduced motion ----- */
+
+@media (prefers-reduced-motion: reduce) {
+  html.js-page-anim [data-anim="top"],
+  html.js-page-anim [data-anim="act1"],
+  html.js-page-anim [data-anim="about"],
+  html.js-page-anim [data-anim="media"],
+  html.js-page-anim [data-anim="body"] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  html.js-page-anim [data-anim="headline"] .line-text {
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* Fallback: if JS fails, content is visible */
+html:not(.js-page-anim) [data-anim="top"],
+html:not(.js-page-anim) [data-anim="act1"],
+html:not(.js-page-anim) [data-anim="about"],
+html:not(.js-page-anim) [data-anim="media"],
+html:not(.js-page-anim) [data-anim="body"] {
+  opacity: 1;
+  transform: none;
+}
+
+html:not(.js-page-anim) [data-anim="headline"] .line-text {
+  transform: none;
 }

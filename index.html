@@ -4,13 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jorge Santos — Designer</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260502m">
+  <link rel="stylesheet" href="styles.css?v=20260512m">
   <script>
-    // Figma capture: ensure the page is visible + fully revealed at capture time.
-    // This only runs when the #figmacapture hash is present.
     (function() {
       try {
         if (typeof location !== 'undefined' && location.hash && location.hash.indexOf('figmacapture=') !== -1) {
@@ -21,21 +20,22 @@
   </script>
   <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
   <style>
-    /* Capture-only overrides (no visual change in normal browsing) */
     html.figma-capture body { visibility: visible !important; }
-    html.figma-capture [data-animate] {
+    html.figma-capture [data-anim] {
       opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+    html.figma-capture [data-anim="headline"] .line-text {
       transform: none !important;
       transition: none !important;
     }
   </style>
   <script>
-    // Check BEFORE page renders if we came from same header layout
     if (sessionStorage.getItem('fromStaticHeader')) {
       document.documentElement.classList.add('no-header-animation');
     }
 
-    // Wait for specific fonts to load before showing content (prevents FOUT)
     (function() {
       var fontsLoaded = false;
 
@@ -59,93 +59,110 @@
     })();
   </script>
 </head>
-<body>
-  <!-- Fixed Navigation Bar (appears on scroll) -->
-  <nav class="sticky-nav">
-    <a href="index.html" class="sticky-logo">Jorge Santos</a>
-    <div class="sticky-links">
-      <a href="https://drive.google.com/file/d/1LZN-jjJxgZFZaiveGcp8Fr3doQriB6R3/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="nav-link">Resume</a>
-      <a href="about.html" class="nav-link">About</a>
-      <a href="mailto:jsantoscreates@gmail.com" class="nav-link">Contact</a>
-    </div>
-  </nav>
-
+<body class="page-redesign-home">
   <main class="container container--home">
-    <header class="header" data-entrance="header">
-      <div class="hero-text" data-animate="fade">
-        <h1>Jorge Santos is a multidisciplinary portuguese designer driven by ideas combining creativity, insight and solid execution.</h1>
-      </div>
-    </header>
-
-    <section class="projects">
-      <article class="project-card" data-entrance="project">
-        <a href="personal-finance-tracker.html" class="project-card-media" data-animate="image" data-cursor-text="View case study" aria-label="Personal Finance Tracker — open case study">
-          <video class="project-card-video" muted loop playsinline preload="auto">
-            <source src="videos/Personal_Finance_Tracker.mp4" type="video/mp4">
-          </video>
-        </a>
-        <div class="project-card-content">
-          <h2 class="project-card-title" data-animate="fade">Personal Finance Tracker</h2>
-          <div class="project-card-info" data-animate="fade">
-            <div class="project-card-text">
-              <p>Track expenses quickly without manual spreadsheets or wasted time</p>
+    <div class="home-shell">
+      <header class="home-hero">
+        <div class="home-hero__intro">
+          <div class="home-hero__row">
+            <h1 class="home-display" data-anim="headline">A multidisciplinary portuguese designer, curious about everything, restless until it's built.</h1>
+            <div class="home-links" data-anim="top">
+              <p><a href="mailto:jsantoscreates@gmail.com">jsantoscreates@gmail.com</a></p>
+              <p>
+                <a href="https://www.instagram.com/jsantoscreates/" target="_blank" rel="noopener noreferrer">Instagram</a><span>, </span>
+                <a href="https://drive.google.com/file/d/1tCJh-X86nG6WQK6D1YC8gFeqhsus5c0e/view?usp=sharing" target="_blank" rel="noopener noreferrer">Resume</a><span>, </span>
+                <a href="https://www.linkedin.com/in/jorge-santos-64bb522206/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              </p>
             </div>
           </div>
+          <p class="home-about" data-anim="about">I'm Jorge, a Lisbon-based designer working across product, interfaces, and graphic design. I think of buttons when reading behavioural economics, of space when hearing music, of grids when finding broken tiles. Everything feeds the work.</p>
         </div>
-      </article>
+      </header>
 
-      <article class="project-card">
-        <a href="https://mouse-relink-18762291.figma.site/" target="_blank" rel="noopener noreferrer" class="project-card-media" data-animate="image" data-cursor-text="Visit project" aria-label="Release Figma Makeathon — open project">
-          <video class="project-card-video" muted loop playsinline preload="auto">
-            <source src="videos/Release_final.mp4" type="video/mp4">
-          </video>
-        </a>
-        <div class="project-card-content">
-          <h2 class="project-card-title" data-animate="fade">Release Figma Makeathon</h2>
-          <div class="project-card-info" data-animate="fade">
-            <div class="project-card-text">
-              <p>A digital space to write and release emotional weight</p>
+      <section class="projects projects-redesign" id="projects" aria-label="Selected work">
+        <article class="home-project">
+          <a href="personal-finance-tracker.html" class="home-project__media" data-anim="act1" data-cursor-text="view case study" aria-label="Personal Expense Tracker App — open case study">
+            <video class="project-card-video" muted loop playsinline preload="auto">
+              <source src="Videos home/Personal ExpenseTracker App.mp4" type="video/mp4">
+            </video>
+          </a>
+          <div class="home-project__aside" data-anim="act1">
+            <div class="home-project__header">
+              <h2 class="home-project__title">Personal Expense<br>Tracker App</h2>
+              <p class="home-project__label">Product Design</p>
             </div>
+            <p class="home-project__desc">Track expenses quickly without manual spreadsheets or wasted time</p>
           </div>
-        </div>
-      </article>
+        </article>
 
-      <article class="project-card">
-        <a href="https://posteremojiapp.vercel.app/" target="_blank" rel="noopener noreferrer" class="project-card-media" data-animate="image" data-cursor-text="Visit project" aria-label="Poster Emoji App — open project">
-          <video class="project-card-video" muted loop playsinline preload="metadata" poster="">
-            <source src="videos/Poster_emoji_final.mp4" type="video/mp4">
-          </video>
-        </a>
-        <div class="project-card-content">
-          <h2 class="project-card-title" data-animate="fade">Poster Emoji App</h2>
-          <div class="project-card-info" data-animate="fade">
-            <div class="project-card-text">
-              <p>A simple app for creating posters with emoji compositions</p>
+        <article class="home-project">
+          <a href="https://mouse-relink-18762291.figma.site/" target="_blank" rel="noopener noreferrer" class="home-project__media" data-cursor-text="visit project" aria-label="Release — open project">
+            <video class="project-card-video" muted loop playsinline preload="auto">
+              <source src="Videos home/Release.mp4" type="video/mp4">
+            </video>
+          </a>
+          <div class="home-project__aside">
+            <div class="home-project__header">
+              <h2 class="home-project__title">Release — A therapeutic web experience</h2>
+              <p class="home-project__label">Interaction Design</p>
             </div>
+            <p class="home-project__desc">A digital space to write and release emotional weight</p>
           </div>
-        </div>
-      </article>
+        </article>
 
-      <article class="project-card">
-        <a href="https://printed-years.vercel.app/" target="_blank" rel="noopener noreferrer" class="project-card-media" data-animate="image" data-cursor-text="Visit project" aria-label="Printed Years — open project">
-          <video class="project-card-video" muted loop playsinline preload="metadata" poster="">
-            <source src="videos/printed_years_final.mp4" type="video/mp4">
-          </video>
-        </a>
-        <div class="project-card-content">
-          <h2 class="project-card-title" data-animate="fade">Printed Years</h2>
-          <div class="project-card-info" data-animate="fade">
-            <div class="project-card-text">
-              <p>A gallery giving digital posters a quieter space to exist</p>
+        <article class="home-project">
+          <a href="https://posteremojiapp.vercel.app/" target="_blank" rel="noopener noreferrer" class="home-project__media" data-cursor-text="visit project" aria-label="Emoji Poster Creator Tool — open project">
+            <video class="project-card-video" muted loop playsinline preload="metadata">
+              <source src="Videos home/Poster emoji.mp4" type="video/mp4">
+            </video>
+          </a>
+          <div class="home-project__aside">
+            <div class="home-project__header">
+              <h2 class="home-project__title">Emoji Poster<br>Creator Tool</h2>
+              <p class="home-project__label">Creative Coding</p>
             </div>
+            <p class="home-project__desc">A simple app for creating posters with emoji compositions</p>
           </div>
-        </div>
-      </article>
-    </section>
+        </article>
 
+        <article class="home-project">
+          <a href="https://printed-years.vercel.app/" target="_blank" rel="noopener noreferrer" class="home-project__media" data-cursor-text="visit project" aria-label="Printed Years — open project">
+            <video class="project-card-video" muted loop playsinline preload="metadata">
+              <source src="Videos home/printed years.mp4" type="video/mp4">
+            </video>
+          </a>
+          <div class="home-project__aside">
+            <div class="home-project__header">
+              <h2 class="home-project__title">Printed Years — Five Years of Posters</h2>
+              <p class="home-project__label">Web Design</p>
+            </div>
+            <p class="home-project__desc">A gallery giving digital posters a quieter space to exist</p>
+          </div>
+        </article>
+      </section>
+
+      <footer class="footer-redesign">
+        <div class="footer-redesign__info">
+          <div class="footer-redesign__contact" aria-label="Contact">
+            <p><a href="mailto:jsantoscreates@gmail.com">jsantoscreates@gmail.com</a></p>
+            <p>
+              <a href="https://www.instagram.com/jsantoscreates/" target="_blank" rel="noopener noreferrer">Instagram</a><span>, </span>
+              <a href="https://drive.google.com/file/d/1tCJh-X86nG6WQK6D1YC8gFeqhsus5c0e/view?usp=sharing" target="_blank" rel="noopener noreferrer">Resume</a><span>, </span>
+              <a href="https://www.linkedin.com/in/jorge-santos-64bb522206/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            </p>
+          </div>
+          <p class="footer-redesign__copy">© 2026 Jorge Santos. All rights reserved.</p>
+        </div>
+        <button type="button" class="footer-redesign__top" data-back-to-top aria-label="Back to top">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M17 8L12 3L7 8M12 3V21" stroke="currentColor" stroke-width="0.8" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </footer>
+    </div>
   </main>
 
   <div class="custom-cursor" aria-hidden="true"><span class="cursor-text"></span></div>
-  <script src="main.js?v=20260414d"></script>
+  <script src="main.js?v=20260512m"></script>
 </body>
 </html>
