@@ -1626,7 +1626,7 @@ body.pft-case-study .pft-duo-cell img {
   }
 
   .home-project {
-    flex-direction: row;
+    flex-direction: row-reverse;
     justify-content: space-between;
     align-items: flex-start;
     gap: 0;
@@ -1937,6 +1937,7 @@ body.pft-case-study .pft-duo-cell img {
      Image caps at 900px at ≥1440; scales below. */
   .page-cs-figma .cs-row {
     display: flex;
+    flex-direction: row-reverse;
     justify-content: space-between;
     align-items: flex-start;
     gap: 0;
